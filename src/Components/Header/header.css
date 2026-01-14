@@ -1,0 +1,62 @@
+.headermain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  /* Dark blue gradient matching the top of the UI design */
+  background: linear-gradient(90deg, #4c99e6 0%, #1b458f 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 0 0 30px 30px;
+}
+
+.headermain h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic; /* Matches the logo style in the image */
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.headerlabel {
+  display: flex;
+  align-items: center;
+  gap: 120px;
+}
+
+.headerlabel ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.headerlabel li {
+  cursor: pointer;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1); /* Soft glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.headerlabel li:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Specific style for the Logout button to make it stand out slightly */
+.logoutbtn li {
+  background: #0d3270;
+  border: none;
+  color: #fff;
+}
+
+.logoutbtn li:hover {
+  background: #76a3ec;
+}
