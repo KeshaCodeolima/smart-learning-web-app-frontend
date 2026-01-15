@@ -126,3 +126,10 @@
 .loginlinks a:hover::after {
     width: 100%;
 }
+
+.errors {
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 16px;
+}
