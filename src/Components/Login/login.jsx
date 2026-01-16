@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
 
@@ -27,6 +28,15 @@ function Login() {
         const ValidationErrors = validation();
         if (Object.keys(ValidationErrors).length > 0) {
             setErrors(ValidationErrors);
+        }else{
+            axios.post('http://localhost:5000/api/users/login',{username,password})
+            .then((result)=>{
+                if(result.data === 'Successful login'){
+                    alert("Login Successfully!")
+                }else{
+                    alert(result.data);
+                }
+            }).catch((error)=>{console.log(error)})
         }
     }
     return (
@@ -36,7 +46,7 @@ function Login() {
                 <form onSubmit={login}>
                     <div className="logininput">
                         <label>User Name: </label>
-                        <input type="email" onChange={(e)=> setUsername(e.target.value)}/>
+                        <input type="text" onChange={(e)=> setUsername(e.target.value)}/>
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
                         <label>Password: </label>
