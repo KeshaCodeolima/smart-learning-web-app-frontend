@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './signup.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 function Signup() {
     const [name, setName] = useState('');
@@ -9,6 +10,7 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [reenterpassword, setReenterpassword] = useState('');
     const [errors, setErrors] = useState('');
+    const navigate = useNavigate();
 
     const validation = () => {
 
@@ -42,6 +44,16 @@ function Signup() {
         const ValidationErrors = validation();
         if (Object.keys(ValidationErrors).length > 0) {
             setErrors(ValidationErrors);
+        } else {
+            axios.post('http://localhost:5000/api/users/register', { name, email, username, password })
+                .then(result => {
+                    if(result.data === 'Successful'){
+                        alert('Register Successfully!');
+                        navigate('/');
+                    }else{
+                        alert(result.data);
+                    }
+                }).catch(error => console.log(error));
         }
     };
     return (
@@ -64,16 +76,16 @@ function Signup() {
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
                         <label>Password:</label>
-                        <input type="text" name="" id="" onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" name="" id="" onChange={(e) => setPassword(e.target.value)} />
                         {errors.password && <p className='errors'>{errors.password}</p>}
 
                         <label>Reenter Password:</label>
-                        <input type="text" name="" id="" onChange={(e) => setReenterpassword(e.target.value)} />
+                        <input type="password" name="" id="" onChange={(e) => setReenterpassword(e.target.value)} />
                         {errors.reenterpassword && <p className='errors'>{errors.reenterpassword}</p>}
 
                     </div>
                     <div className="signupbtn">
-                        <button>Register</button>
+                        <button type='submit'>Register</button>
                     </div>
                     <div className="signuplink">
                         <span>Already have a Account <Link to={'/'}>Login</Link>. </span>
