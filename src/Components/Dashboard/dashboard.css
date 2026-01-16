@@ -22,17 +22,16 @@
 .dashmain h2 {
     color: #144594;
     font-size: 2.8rem;
-    margin-top: 1%;
-    margin-bottom: 20px;
-    margin-right: 46%;
+    margin-bottom: 25px;
+    margin-right: 52%;
     font-weight: 800;
     text-align: center;
+    width: 100%;
 }
 
 .dashsection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto;
     gap: 30px;
 }
 
@@ -40,6 +39,8 @@
 .dashquiz,
 .dashshort,
 .dashprogres {
+    position: relative;
+    overflow: hidden;
     padding: 30px 20px;
     border-radius: 30px;
     color: white;
@@ -48,9 +49,38 @@
     align-items: center;
     justify-content: center;
     min-height: 220px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s ease;
     cursor: pointer;
     box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dashsection span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.dashvideo:hover span,
+.dashquiz:hover span,
+.dashshort:hover span,
+.dashprogres:hover span {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .dashvideo {
@@ -73,27 +103,27 @@
 .dashquiz:hover,
 .dashshort:hover,
 .dashprogres:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .image {
     width: 80px;
     height: 80px;
     margin-bottom: 15px;
+    transition: transform 0.4s ease;
+}
+
+.dashvideo:hover .image,
+.dashquiz:hover .image,
+.dashshort:hover .image,
+.dashprogres:hover .image {
+    transform: scale(0.8);
+    opacity: 0.2;
 }
 
 .dashsection p {
     font-size: 1.15rem;
     font-weight: 700;
     text-align: center;
-}
-
-@media (max-width: 900px) {
-    .dashsection {
-        grid-template-areas:
-            "video quiz"
-            "short progres";
-        grid-template-columns: 1fr 1fr;
-    }
 }
