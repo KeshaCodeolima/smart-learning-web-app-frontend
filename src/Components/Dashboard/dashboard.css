@@ -1,0 +1,99 @@
+.dashmain {
+    min-height: 94vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashmain2 {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    width: 95%;
+    max-width: 1100px;
+    padding: 50px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dashmain h2 {
+    color: #144594;
+    font-size: 2.8rem;
+    margin-top: 1%;
+    margin-bottom: 20px;
+    margin-right: 46%;
+    font-weight: 800;
+    text-align: center;
+}
+
+.dashsection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 30px;
+}
+
+.dashvideo,
+.dashquiz,
+.dashshort,
+.dashprogres {
+    padding: 30px 20px;
+    border-radius: 30px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dashvideo {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.dashquiz {
+    background: linear-gradient(135deg, #2af598 0%, #009efd 100%);
+}
+
+.dashshort {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.dashprogres {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.dashvideo:hover,
+.dashquiz:hover,
+.dashshort:hover,
+.dashprogres:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.dashsection p {
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .dashsection {
+        grid-template-areas:
+            "video quiz"
+            "short progres";
+        grid-template-columns: 1fr 1fr;
+    }
+}
