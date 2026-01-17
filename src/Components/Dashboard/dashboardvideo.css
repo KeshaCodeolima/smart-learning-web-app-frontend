@@ -1,0 +1,119 @@
+.videomain {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    position: relative;
+}
+
+/* The "Box" that contains the light color and the video player */
+.video-content-card {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    width: 70%;
+    max-width: 1100px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4% auto;
+    padding: 10px;
+}
+
+.videomain h2 {
+    color: #144594;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: -10%;
+}
+
+/* Upload Bar */
+/* Container for the upload area */
+.videoadd {
+    background: linear-gradient(135deg, rgb(90, 169, 237) 0%, rgb(1, 22, 92) 100%);
+    padding: 15px 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 85%;
+    position: relative;
+    cursor: pointer;
+}
+
+.videoadd input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.videoadd::before {
+    content: 'Choose File';
+    background: #144594;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.videoadd span {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* The Cinema Player */
+.videoinput {
+    width: 60%;
+    aspect-ratio: 16 / 9;
+    background: #000000;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
+    border: 2px solid #ffffff;
+}
+
+.videoinput span {
+    color: #555;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+/* Back Button */
+.videobtn button {
+    background: #144594;
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.videobtn button:hover {
+    background: #0d3270;
+    transform: scale(1.05);
+}
