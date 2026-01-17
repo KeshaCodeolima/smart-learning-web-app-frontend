@@ -33,11 +33,13 @@ function Dashboard() {
                                 <span>Lets you quickly make notes while studying to summarize important points.</span>
                             </div>
                         </Link>
-                        <div className="dashprogres">
-                            <img src={Progres} alt="Progress" className='image' />
-                            <p>Check Your Progress</p>
-                            <span>Shows your learning stats, like quiz scores and weak areas, over time.</span>
-                        </div>
+                        <Link to={'/progress'}>
+                            <div className="dashprogres">
+                                <img src={Progres} alt="Progress" className='image' />
+                                <p>Check Your Progress</p>
+                                <span>Shows your learning stats, like quiz scores and weak areas, over time.</span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
