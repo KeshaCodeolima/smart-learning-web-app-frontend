@@ -3,6 +3,7 @@ import Camera from '../../Images/Camera.png';
 import Quiz from '../../Images/Quiz.png';
 import ShortNote from '../../Images/ShortNote.png';
 import Progres from '../../Images/Progres.png';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
     return (
@@ -11,11 +12,13 @@ function Dashboard() {
                 <h2>DashBoard</h2>
                 <div className="dashmain2">
                     <div className="dashsection">
-                        <div className="dashvideo">
-                            <img src={Camera} alt="Camera" className='image' />
-                            <p>Watch video with Your Emotions</p>
-                            <span>Adjusts video playback speed based on your emotions understanding.</span>
-                        </div>
+                        <Link to={'/video'}>
+                            <div className="dashvideo">
+                                <img src={Camera} alt="Camera" className='image' />
+                                <p>Watch video with Your Emotions</p>
+                                <span>Adjusts video playback speed based on your emotions understanding.</span>
+                            </div>
+                        </Link>
                         <div className="dashquiz">
                             <img src={Quiz} alt="Quiz" className='image' />
                             <p>Answer Your Quiz</p>
