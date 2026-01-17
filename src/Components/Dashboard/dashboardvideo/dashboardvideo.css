@@ -10,13 +10,13 @@
     position: relative;
 }
 
-/* The "Box" that contains the light color and the video player */
 .video-content-card {
     background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     width: 70%;
     max-width: 1100px;
+    height: 90vh;
     border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
@@ -36,8 +36,6 @@
     margin-top: -10%;
 }
 
-/* Upload Bar */
-/* Container for the upload area */
 .videoadd {
     background: linear-gradient(135deg, rgb(90, 169, 237) 0%, rgb(1, 22, 92) 100%);
     padding: 15px 30px;
@@ -81,7 +79,6 @@
     text-overflow: ellipsis;
 }
 
-/* The Cinema Player */
 .videoinput {
     width: 60%;
     aspect-ratio: 16 / 9;
@@ -101,7 +98,6 @@
     letter-spacing: 2px;
 }
 
-/* Back Button */
 .videobtn button {
     background: #144594;
     color: white;
