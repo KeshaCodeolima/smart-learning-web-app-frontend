@@ -19,11 +19,13 @@ function Dashboard() {
                                 <span>Adjusts video playback speed based on your emotions understanding.</span>
                             </div>
                         </Link>
-                        <div className="dashquiz">
-                            <img src={Quiz} alt="Quiz" className='image' />
-                            <p>Answer Your Quiz</p>
-                            <span>Creates quizzes based on your learning progress to test your knowledge.</span>
-                        </div>
+                        <Link to={'/quiz'}>
+                            <div className="dashquiz">
+                                <img src={Quiz} alt="Quiz" className='image' />
+                                <p>Answer Your Quiz</p>
+                                <span>Creates quizzes based on your learning progress to test your knowledge.</span>
+                            </div>
+                        </Link>
                         <div className="dashshort">
                             <img src={ShortNote} alt="ShortNote" className='image' />
                             <p>Make Short Notes</p>
