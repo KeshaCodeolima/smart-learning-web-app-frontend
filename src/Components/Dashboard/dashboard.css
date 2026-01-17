@@ -127,3 +127,7 @@
     font-weight: 700;
     text-align: center;
 }
+
+.dashsection a {
+    text-decoration: none;
+}
