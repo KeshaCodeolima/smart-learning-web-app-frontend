@@ -3,7 +3,7 @@ import Header from "./Components/Header/header";
 import Signup from "./Components/Signup/signup";
 import Login from "./Components/Login/login";
 import Dashboard from "./Components/Dashboard/dashboard";
-import Dashboardviode from "./Components/Dashboard/dashboardviode";
+import Dashboardviode from "./Components/Dashboard/dashboardvideo/dashboardviode";
 
 function App() {
   return (
