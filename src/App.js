@@ -5,6 +5,7 @@ import Login from "./Components/Login/login";
 import Dashboard from "./Components/Dashboard/dashboard";
 import Dashboardviode from "./Components/Dashboard/dashboardvideo/dashboardviode";
 import Dashboardquiz from "./Components/Dashboard/dashboradquiz/dashboardquiz";
+import Dashboardnotes from "./Components/Dashboard/dashboardnotes/dashboardnotes";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path = "/" element={<Dashboard/>}/>
       <Route path="/video" element={<Dashboardviode/>}/>
       <Route path="/quiz" element={<Dashboardquiz/>}/>
+      <Route path="/note" element={<Dashboardnotes/>}/>
     </Routes>
     </BrowserRouter>
     </>
