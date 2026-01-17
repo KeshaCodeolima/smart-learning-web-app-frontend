@@ -26,11 +26,13 @@ function Dashboard() {
                                 <span>Creates quizzes based on your learning progress to test your knowledge.</span>
                             </div>
                         </Link>
-                        <div className="dashshort">
-                            <img src={ShortNote} alt="ShortNote" className='image' />
-                            <p>Make Short Notes</p>
-                            <span>Lets you quickly make notes while studying to summarize important points.</span>
-                        </div>
+                        <Link to={'/note'}>
+                            <div className="dashshort">
+                                <img src={ShortNote} alt="ShortNote" className='image' />
+                                <p>Make Short Notes</p>
+                                <span>Lets you quickly make notes while studying to summarize important points.</span>
+                            </div>
+                        </Link>
                         <div className="dashprogres">
                             <img src={Progres} alt="Progress" className='image' />
                             <p>Check Your Progress</p>
