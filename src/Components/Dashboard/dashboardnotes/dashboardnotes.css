@@ -1,0 +1,107 @@
+.notemain {
+   background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 320px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notemain h2 {
+    color: #144594;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+}
+
+.notemain2 {
+    background: rgba(255, 255, 255, 0.70);
+    width: 90%;
+    max-width: 900px;
+    padding: 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notemain2 span {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #144594;
+    margin-left: 5px;
+}
+
+.notemain2 textarea {
+    width: 80%;
+    min-height: 100px;
+    background: rgba(233, 232, 232, 0.9);
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #383737;
+    outline: none;
+    resize: vertical; 
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.notemain2 textarea:focus {
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(20, 69, 148, 0.1);
+}
+
+.notemainbtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.notemainbtn button {
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.notemainbtn > button {
+    background: #144594;
+    color: white;
+}
+
+.notemainbtn > button:hover {
+    background: #0d3270;
+    transform: translateY(-2px);
+}
+
+.notemainbtn a {
+    text-decoration: none;
+}
+
+.notebtn {
+    background: #144594;
+    color: white;
+}
+
+.notebtn:hover {
+    background:  #0d3270;
+    transform: translateY(-2px);
+}

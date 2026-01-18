@@ -1,0 +1,105 @@
+.progressmain {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: -4%;
+}
+
+.progressmain2 {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    width: 95%;
+    max-width: 1100px;
+    padding: 50px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.progressmain2 h2 {
+    color: #144594;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -1px;
+}
+
+.progressresults {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.overall,
+.totaltopic,
+.weekconcept {
+    padding: 30px 20px;
+    border-radius: 30px;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.overall:hover,
+.totaltopic:hover,
+.weekconcept:hover {
+    transform: translateY(-10px);
+}
+
+.overall {
+    background: linear-gradient(140deg, rgb(31, 148, 238) 0%, rgb(155, 70, 212) 90%);
+}
+
+.totaltopic {
+    background: linear-gradient(140deg, rgb(48, 226, 196) 0%, rgb(88, 170, 233) 100%);
+}
+
+.weekconcept {
+    background: linear-gradient(140deg, rgb(249, 178, 64) 0%, rgb(238, 82, 209) 100%);
+}
+
+.progressresults span {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    display: block;
+}
+
+.progressresults p {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.progressmain2 button {
+    background: #144594;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(20, 69, 148, 0.4);
+}
+
+.progressmain2 button:hover {
+    background: #0d3270;
+    transform: scale(1.05);
+}
+
+@media (max-width: 850px) {
+    .progressresults {
+        grid-template-columns: 1fr;
+    }
+}
