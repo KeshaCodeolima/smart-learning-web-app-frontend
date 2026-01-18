@@ -24,7 +24,7 @@ function Dashboardviode() {
             <span>Video</span>
           </div>
           <div className="videobtn">
-            <Link to={'/'}><button>Back to Dashboard</button></Link>
+            <Link to={'/dashboard'}><button>Back to Dashboard</button></Link>
           </div>
         </div>
       </div>

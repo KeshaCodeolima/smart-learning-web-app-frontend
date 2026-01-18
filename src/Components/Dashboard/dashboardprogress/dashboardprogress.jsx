@@ -21,7 +21,7 @@ function dashboardprogress() {
                     <p>Overall Week Concepts</p>
                 </div>
             </div>
-            <Link to={'/'}><button>Back to Dashboard</button></Link>
+            <Link to={'/dashboard'}><button>Back to Dashboard</button></Link>
         </div>
       </div>
     </>

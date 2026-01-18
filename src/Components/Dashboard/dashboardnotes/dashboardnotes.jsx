@@ -11,7 +11,7 @@ function dashboardnotes() {
                     <textarea name="question" id=""></textarea>
                     <div className="notemainbtn">
                         <button>Create Note</button>
-                        <Link to={'/'}><button className='notebtn'>Back to Dashboard</button></Link>
+                        <Link to={'/dashboard'}><button className='notebtn'>Back to Dashboard</button></Link>
                     </div>
                 </div>
             </div>

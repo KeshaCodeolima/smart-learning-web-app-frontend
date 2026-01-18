@@ -24,7 +24,7 @@ function Dashboardquiz() {
                         <button>Create Quiz</button>
                     </div>
                 </div>
-                <Link to={'/'}><button>Back to Dashboard</button></Link>
+                <Link to={'/dashboard'}><button>Back to Dashboard</button></Link>
             </div>
         </>
     )
