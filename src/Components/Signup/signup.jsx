@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import './signup.css';
 import { useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Signup() {
     const [name, setName] = useState('');
@@ -39,6 +41,32 @@ function Signup() {
         return newErrors;
     };
 
+    const Notify = () => {
+            toast.success("Register Successfully", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                onClose: () => navigate('/')
+            });
+        }
+    const NotifyInfo = () => {
+        toast.warn("Register Fail! Try Again", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
+    }
+
     const register = (e) => {
         e.preventDefault();
         const ValidationErrors = validation();
@@ -48,10 +76,9 @@ function Signup() {
             axios.post('http://localhost:5000/api/users/register', { name, email, username, password })
                 .then(result => {
                     if(result.data === 'Successful'){
-                        alert('Register Successfully!');
-                        navigate('/');
+                        Notify();
                     }else{
-                        alert(result.data);
+                        NotifyInfo();
                     }
                 }).catch(error => console.log(error));
         }
@@ -92,6 +119,7 @@ function Signup() {
                     </div>
                 </form>
             </div>
+            <ToastContainer/>
         </>
     )
 }
