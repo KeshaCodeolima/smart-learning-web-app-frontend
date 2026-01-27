@@ -12,7 +12,8 @@
     color: #144594;
     font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-top: -46px;
+    margin-bottom: 10px;
 }
 
 .settingmain2 {
@@ -51,7 +52,7 @@
 }
 
 .settingbtn {
-    margin-top: 180px;
+    margin-top: 16px;
     margin-left: 280px;
     background: #0e3784;
     color: white;
