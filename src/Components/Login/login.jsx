@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,6 +8,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
+    const navigate = useNavigate();
 
     const validation = () => {
         const newErrors = {};
@@ -28,15 +29,18 @@ function Login() {
         const ValidationErrors = validation();
         if (Object.keys(ValidationErrors).length > 0) {
             setErrors(ValidationErrors);
-        }else{
-            axios.post('http://localhost:5000/api/users/login',{username,password})
-            .then((result)=>{
-                if(result.data === 'Successful login'){
-                    alert("Login Successfully!")
-                }else{
-                    alert(result.data);
-                }
-            }).catch((error)=>{console.log(error)})
+        } else {
+            axios.post('http://localhost:5000/api/users/login', { username, password })
+                .then((result) => {
+                    if (result.data.message === 'Successful Login') {
+                        alert("Login Successfully!")
+                        localStorage.setItem("keepLoggedIn", JSON.stringify(true));
+                        localStorage.setItem("currentuser", JSON.stringify(result.data.user));
+                        navigate("/dashboard")
+                    } else {
+                        alert(result.data);
+                    }
+                }).catch((error) => { console.log(error) })
         }
     }
     return (
@@ -46,13 +50,12 @@ function Login() {
                 <form onSubmit={login}>
                     <div className="logininput">
                         <label>User Name: </label>
-                        <input type="text" onChange={(e)=> setUsername(e.target.value)}/>
+                        <input type="text" onChange={(e) => setUsername(e.target.value)} />
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
                         <label>Password: </label>
-                        <input type="password" onChange={(e)=> setPassword(e.target.value)} />
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} />
                         {errors.password && <p className='errors'>{errors.password}</p>}
-
                     </div>
                     <div className="loginfoget">
                         <label>Forget Password</label>
