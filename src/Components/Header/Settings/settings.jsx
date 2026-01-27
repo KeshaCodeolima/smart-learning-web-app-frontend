@@ -1,7 +1,12 @@
 import './settings.css';
 import LogoutIcon from '../../../Images/logouticon.png';
 
-function settings() {
+function Settings() {
+    const user = JSON.parse(localStorage.getItem("currentuser")) || {};
+    const logouthandle = () => {
+        localStorage.clear();
+        window.location.href = '/';
+    }
     return (
         <>
             <div className="settingmain">
@@ -9,18 +14,18 @@ function settings() {
                 <div className="settingmain2">
                     <div className="settingname">
                         <label>Full Name</label>
-                        <span>show name</span>
+                        <span>{user.name || "Please Login"}</span>
                     </div>
                     <div className="settinguser">
                         <label>UserName</label>
-                        <span>show username</span>
+                        <span>{user.username || 'Please Login'}</span>
                     </div>
                     <div className="settingemail">
                         <label>Email</label>
-                        <span>show email</span>
+                        <span>{user.email || "Please Login"}</span>
                     </div>
                 </div>
-                <button className='settingbtn'>Logout
+                <button className='settingbtn' onClick={logouthandle}>Logout
                     <img src={LogoutIcon} alt="LogoutIcon" className='logouticonbtn' />
                 </button>
             </div>
@@ -28,4 +33,4 @@ function settings() {
     )
 }
 
-export default settings
+export default Settings
