@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
 
@@ -24,6 +26,32 @@ function Login() {
         return newErrors;
     };
 
+    const Notify = () => {
+        toast.success("Login Successfully", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            onClose: () => navigate('/dashboard')
+        });
+    }
+    const NotifyInfo = () => {
+        toast.info("UserName or Password Incorrect", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
+    }
+
     const login = (e) => {
         e.preventDefault();
         const ValidationErrors = validation();
@@ -33,12 +61,11 @@ function Login() {
             axios.post('http://localhost:5000/api/users/login', { username, password })
                 .then((result) => {
                     if (result.data.message === 'Successful Login') {
-                        alert("Login Successfully!")
+                        Notify();
                         localStorage.setItem("keepLoggedIn", JSON.stringify(true));
                         localStorage.setItem("currentuser", JSON.stringify(result.data.user));
-                        navigate("/dashboard")
                     } else {
-                        alert(result.data);
+                        NotifyInfo();
                     }
                 }).catch((error) => { console.log(error) })
         }
@@ -68,6 +95,7 @@ function Login() {
                     </div>
                 </form>
             </div>
+            <ToastContainer />
         </>
     )
 }
