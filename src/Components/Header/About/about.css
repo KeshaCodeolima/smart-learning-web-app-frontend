@@ -1,0 +1,147 @@
+.aboutmain {
+    padding: 50px 10%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgb(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.aboutmain1 {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(20deg, #1b458f 0%, #0eefd1 100%);
+    padding: 40px;
+    border-radius: 40px;
+    color: white;
+    overflow: hidden;
+    margin-top: -20px;
+    margin-bottom: 50px;
+}
+
+.aboutmain1 h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    max-width: 600px;
+    line-height: 1;
+}
+
+.aboutmain1 h1 h5 {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0 10px;
+}
+
+.aboutmain2 {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.aboutleftside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+}
+
+.aboutleftside h3 {
+    color: #1b458f;
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+    padding-left: 15px;
+}
+
+.aboutleftside span {
+    color: #000000;
+    font-size: 1.05rem;
+}
+
+.aboutleftside h3~span {
+    display: block;
+    background: rgb(247, 247, 247);
+    padding: 10px 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.aboutleftside h3~span:hover {
+    transform: translateX(10px);
+    color: #1b458f;
+    font-weight: 600;
+}
+
+.aboutrigthside {
+    background: rgb(228, 245, 255);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-left: 10px;
+    padding: 50px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.aboutrigthside h3 {
+    margin-bottom: 25px;
+    color: #083269;
+    font-size: 1.4rem;
+}
+
+.myimage {
+    width: 220px;
+    height: 240px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4c99e6;
+    margin-bottom: 20px;
+    padding: 4px;
+    transition: transform 0.3s ease;
+}
+
+.myimage:hover {
+    transform: scale(1.05);
+}
+
+.aboutrigthside span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1b458f;
+}
+
+.aboutbtn button {
+    border: none;
+    border-radius: 20px;
+    background-color: #083269;
+    margin-left: 90%;
+    margin-top: 20px;
+    padding: 10px 50px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+}
+
+.aboutbtn button:hover {
+    color: #a7a8a9;
+}
+
+@media (max-width: 1024px) {
+    .aboutmain2 {
+        grid-template-columns: 1fr;
+    }
+
+    .aboutmain1 h1 {
+        font-size: 2rem;
+    }
+
+    .headerimage {
+        width: 250px;
+    }
+}
