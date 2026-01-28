@@ -2,7 +2,7 @@ import './header.css';
 import Setting from '../../Images/settingicon.png';
 import { useState } from 'react';
 import Settings from './Settings/settings';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -40,7 +40,7 @@ function Header() {
         <div className="headerlabel">
           <ul>
             <li onClick={handledash}>Home</li>
-            <li>About</li>
+            <Link to={'/about'}><li>About</li></Link>
             <li>Contact Us</li>
           </ul>
           <ul className='settingicon' onClick={() => setIsopen(true)}>
