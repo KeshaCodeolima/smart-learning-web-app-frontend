@@ -41,7 +41,7 @@ function Header() {
           <ul>
             <li onClick={handledash}>Home</li>
             <Link to={'/about'}><li>About</li></Link>
-            <li>Contact Us</li>
+            <Link to={'/contact'}><li>Contact Us</li></Link>
           </ul>
           <ul className='settingicon' onClick={() => setIsopen(true)}>
             <img src={Setting} alt="Setting" />
