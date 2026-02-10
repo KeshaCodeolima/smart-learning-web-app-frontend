@@ -8,11 +8,13 @@ import Dashboardquiz from "./Components/Dashboard/dashboradquiz/dashboardquiz";
 import Dashboardnotes from "./Components/Dashboard/dashboardnotes/dashboardnotes";
 import Dashboardprogress from "./Components/Dashboard/dashboardprogress/dashboardprogress";
 import { useEffect, useState } from "react";
+import About from "./Components/Header/About/about";
+import Contact from "./Components/Header/Contact/contact";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
 
-  useEffect (() => {
+  useEffect(() => {
     const authStatus = JSON.parse(localStorage.getItem("keepLoggedIn"));
     setIsLoggedIn(authStatus);
   }, [])
@@ -28,6 +30,8 @@ function App() {
           <Route path="/quiz" element={<Dashboardquiz />} />
           <Route path="/note" element={<Dashboardnotes />} />
           <Route path="/progress" element={<Dashboardprogress />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </>

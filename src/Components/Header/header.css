@@ -24,12 +24,14 @@
   gap: 120px;
 }
 
-.headerlabel ul {
+.headerlabel ul,
+.headerlabel ul a {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
   gap: 20px;
+  text-decoration: none;
 }
 
 .headerlabel li {
@@ -39,6 +41,7 @@
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
+  color: white;
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
