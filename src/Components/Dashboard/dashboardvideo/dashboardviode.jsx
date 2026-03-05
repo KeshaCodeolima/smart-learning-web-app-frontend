@@ -62,6 +62,7 @@ function Dashboardviode() {
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               width="100%"
+              videoConstraints={{advanced:[{zoom:2.0}]}}
             />
             <div style={{ background: '#000', color: '#fff', textAlign: 'center', fontSize: '12px' }}>
               Status: {prediction}
