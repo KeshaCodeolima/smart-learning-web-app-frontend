@@ -6,6 +6,7 @@ import axios from 'axios';
 function Dashboardnotes() {
 
     const [noteContent, setNoteContent] = useState('');
+    const [language, setLanguage] = useState('English');
     const [summary, setSummary] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -16,9 +17,18 @@ function Dashboardnotes() {
         setIsLoading(true);
         try {
             const response = await axios.post('http://localhost:5000/api/users/note', {
-                text: noteContent
+                text: noteContent,
+                language: language
             });
-            setSummary(response.data.summary);
+
+            const summarytext = response.data.summary;
+            const bulletPoints = summarytext
+                .split(/\. |\n\n|•/)
+                .map(point => point.trim())
+                .filter(point => point.length > 0);
+
+            setSummary(bulletPoints);
+
         } catch (error) {
             console.error("Error Summarizing:", error);
             alert("Something went wrong with Note Summarizing")
@@ -32,6 +42,20 @@ function Dashboardnotes() {
             <div className="notemain">
                 <h2>Summaries Your Notes</h2>
                 <div className="notemain2">
+                    <div className='language-container'>
+                        <label htmlFor="language">Select Language:</label>
+                        <select
+                            className='language-selector'
+                            id="language"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                        >
+                            <option value="English">English</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Sinhala">Sinhala</option>
+                        </select>
+                    </div>
+
                     <span>Note Content</span>
                     <textarea name="question" placeholder='Add the Note Here to Summaraz' value={noteContent}
                         onChange={(e) => setNoteContent(e.target.value)}></textarea>
