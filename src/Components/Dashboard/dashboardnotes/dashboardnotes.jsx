@@ -6,13 +6,16 @@ import axios from 'axios';
 function Dashboardnotes() {
 
     const [noteContent, setNoteContent] = useState('');
-    const [language, setLanguage] = useState('English');
+    const [language, setLanguage] = useState('None');
     const [summary, setSummary] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleCreatNote = async () => {
         if (!noteContent)
             return alert("Please Add Some Note First!")
+
+        if(language ==='None')
+            return alert("Please Select the Language You Want!")
 
         setIsLoading(true);
         try {
@@ -50,6 +53,7 @@ function Dashboardnotes() {
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
                         >
+                            <option value="None" selected>None</option>
                             <option value="English">English</option>
                             <option value="Tamil">Tamil</option>
                             <option value="Sinhala">Sinhala</option>
