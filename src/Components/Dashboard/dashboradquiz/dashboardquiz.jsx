@@ -12,6 +12,7 @@ function Dashboardquiz() {
     const [score, setScore] = useState(null);
     const [showResult, setShowResult] = useState(false);
     const [language, setLanguage] = useState('None');
+    const [quiztopic, setQuizTopic]=useState('');
 
     const NotifyInfo = () => {
         toast.info("Please Add Some Note to Create Quiz", {
@@ -65,12 +66,28 @@ function Dashboardquiz() {
         });
     }
 
+    const NotifyInfo2 = () => {
+        toast.info("Please Enter Topic", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+
     const handlequiz = async () => {
         if (!quiznote)
             return NotifyInfo();
 
         if (language === 'None')
             return NotifyInfo1();
+
+        if(!quiztopic)
+            return NotifyInfo2();
 
         setIsLoading(true);
         try {
@@ -86,6 +103,18 @@ function Dashboardquiz() {
             setIsLoading(false);
         }
     }
+
+    const handleSave = async (finalScore)=>{
+        const user = JSON.parse(localStorage.getItem('currentuser'));
+
+        await axios.post('http://localhost:5000/api/users/save', {
+            userId:user.id,
+            topic: quiztopic,
+            score:finalScore,
+            totalQuestions:quiz.length
+        });
+    }
+
     const handleSelect = (questionIndex, option) => {
         setAnswers({ ...answers, [questionIndex]: option });
     }
@@ -95,6 +124,7 @@ function Dashboardquiz() {
         setQuiznote('');
         setAnswers({});
         setShowResult(false);
+        setLanguage('None');
     }
 
     const handleSubmitQuiz = () => {
@@ -107,6 +137,7 @@ function Dashboardquiz() {
         Notify();
         setScore(correctcount);
         setShowResult(true);
+        handleSave(correctcount);
     }
 
     return (
@@ -125,7 +156,7 @@ function Dashboardquiz() {
                                         value={language}
                                         onChange={(e) => setLanguage(e.target.value)}
                                     >
-                                        <option value="None" selected>None</option>
+                                        <option value="None">None</option>
                                         <option value="English">English</option>
                                         <option value="Sinhala">Sinhala</option>
                                         <option value="Tamil">Tamil</option>
@@ -133,7 +164,7 @@ function Dashboardquiz() {
                                 </div>
 
                                 <span>Create New Quiz</span>
-                                <input type="text" placeholder='Quiz Title' />
+                                <input type="text" placeholder='Quiz Title' onChange={(e)=>setQuizTopic(e.target.value)}/>
                                 <textarea
                                     placeholder='Add Question / Prompt here...'
                                     className='inputbox'
