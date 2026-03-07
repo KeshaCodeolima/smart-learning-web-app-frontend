@@ -11,6 +11,7 @@ function Dashboardquiz() {
     const [isloading, setIsLoading] = useState(false);
     const [score, setScore] = useState(null);
     const [showResult, setShowResult] = useState(false);
+    const [language, setLanguage] = useState('None');
 
     const NotifyInfo = () => {
         toast.info("Please Add Some Note to Create Quiz", {
@@ -51,13 +52,29 @@ function Dashboardquiz() {
         });
     }
 
+    const NotifyInfo1 = () => {
+        toast.info("Please Select the Language", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+
     const handlequiz = async () => {
         if (!quiznote)
             return NotifyInfo();
 
+        if (language === 'None')
+            return NotifyInfo1();
+
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/api/users/quiz', { text: quiznote })
+            const response = await axios.post('http://localhost:5000/api/users/quiz', { text: quiznote, language: language })
             const quizData = JSON.parse(response.data.quiz);
             console.log(quizData);
             setQuiz(quizData);
@@ -100,6 +117,21 @@ function Dashboardquiz() {
                     <div className="quiznormal">
                         {quiz.length === 0 ? (
                             <>
+                                <div className='language-container-quiz'>
+                                    <label htmlFor="language-quiz">Select Language:</label>
+                                    <select
+                                        className='language-selector-quiz'
+                                        id="language"
+                                        value={language}
+                                        onChange={(e) => setLanguage(e.target.value)}
+                                    >
+                                        <option value="None" selected>None</option>
+                                        <option value="English">English</option>
+                                        <option value="Sinhala">Sinhala</option>
+                                        <option value="Tamil">Tamil</option>
+                                    </select>
+                                </div>
+
                                 <span>Create New Quiz</span>
                                 <input type="text" placeholder='Quiz Title' />
                                 <textarea
