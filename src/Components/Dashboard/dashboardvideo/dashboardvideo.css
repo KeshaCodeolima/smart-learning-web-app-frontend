@@ -91,7 +91,7 @@
     margin-bottom: 30px;
 }
 
-.videoinput video{
+.videoinput video {
     border-radius: 25px;
 }
 
@@ -102,6 +102,7 @@
 }
 
 .videobtn button {
+    margin-left: 480px;
     background: #144594;
     color: white;
     border: none;
@@ -113,6 +114,24 @@
 }
 
 .videobtn button:hover {
+    background: #0d3270;
+    transform: scale(1.05);
+}
+
+.proccesbtn {
+    margin-left: -50%;
+    margin-top: -4%;
+    background: #144594;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 32px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.proccesbtn:hover {
     background: #0d3270;
     transform: scale(1.05);
 }
