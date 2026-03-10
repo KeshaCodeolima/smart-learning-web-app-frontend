@@ -2,20 +2,44 @@ import { useEffect, useRef, useState } from 'react';
 import './dashboardvideo.css';
 import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
+import axios from 'axios';
 
 function Dashboardviode() {
   const [filename, setFilename] = useState('');
   const [videoSrc, setVideoSrc] = useState(null);
   const [prediction, setPrediction] = useState('Normal');
+  const [videoFile, setVideoFile] = useState(null);
   const webcamRef = useRef(null);
   const mainVideoRef = useRef(null);
 
   const handlefile = (e) => {
     if (e.target.files.length > 0) {
       const file = e.target.files[0];
+      setVideoFile(file);
       setFilename(file.name);
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+    }
+  };
+
+  const handleuploadfile = async () => {
+    const user = JSON.parse(localStorage.getItem('currentuser'));
+    if (!videoFile) {
+      return alert('Please Select Some Video');
+    }
+    try {
+      const formData = new FormData();
+      formData.append('video', videoFile);
+      formData.append('userId', user.id)
+
+      await axios.post('http://localhost:5000/api/users/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      console.log(formData);
+      alert('Video Send Successfully Check the Quiz Section!');
+    } catch (error) {
+      console.error('Upload Error:', error);
+      alert('Uploading Error!');
     }
   };
 
@@ -47,8 +71,8 @@ function Dashboardviode() {
         }
       }
     };
-    const interval = setInterval(runPrediction,3000);
-    return ()=> clearInterval(interval);
+    const interval = setInterval(runPrediction, 3000);
+    return () => clearInterval(interval);
   }, [videoSrc])
 
   return (
@@ -62,7 +86,7 @@ function Dashboardviode() {
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               width="100%"
-              videoConstraints={{advanced:[{zoom:2.0}]}}
+              videoConstraints={{ advanced: [{ zoom: 2.0 }] }}
             />
             <div style={{ background: '#000', color: '#fff', textAlign: 'center', fontSize: '12px' }}>
               Status: {prediction}
@@ -86,6 +110,7 @@ function Dashboardviode() {
           <div className="videobtn">
             <Link to={'/dashboard'}><button>Back to Dashboard</button></Link>
           </div>
+          <button className='proccesbtn' onClick={handleuploadfile}>Convert Video to Text</button>
         </div>
       </div>
     </>
