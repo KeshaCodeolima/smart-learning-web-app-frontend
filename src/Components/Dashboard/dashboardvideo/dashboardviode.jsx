@@ -80,7 +80,7 @@ function Dashboardviode() {
       <div className="video-content-card">
         <div className="videomain">
           <h2>Watch Video with Your Emotions</h2>
-          <div style={{ position: 'fixed', bottom: 20, right: 20, width: 150, borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff' }}>
+          <div style={{ position: 'fixed', bottom: 80, right: 20, width: 150, borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff' }}>
             <Webcam
               audio={false}
               ref={webcamRef}
