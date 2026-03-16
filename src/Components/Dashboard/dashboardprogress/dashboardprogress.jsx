@@ -14,6 +14,8 @@ function Dashboardprogress() {
     axios.get(`http://localhost:5000/api/users/getdetail?userId=${user.id}`)
       .then(res => {
         setProgress(res.data)
+      }).catch(err=>{
+        console.log(err);
       });
   }, [])
   return (
