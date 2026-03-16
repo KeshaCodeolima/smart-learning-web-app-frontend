@@ -12,6 +12,8 @@ import About from "./Components/Header/About/about";
 import Contact from "./Components/Header/Contact/contact";
 import Dashboardtotaltopic from "./Components/Dashboard/dashboardprogress/dashboardtotaltopic";
 import Dashboardweakconcept from "./Components/Dashboard/dashboardprogress/dashboardweakconcept";
+import Forgotpassword from "./Components/Login/forgotpassword";
+import Resetpassword from "./Components/Login/resetpassword";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
@@ -36,6 +38,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/TotalTopic" element={<Dashboardtotaltopic />} />
           <Route path="/WeakConcept" element={<Dashboardweakconcept />} />
+          <Route path="/forgot" element={<Forgotpassword />} />
+          <Route path="/resetpassword/:token" element={<Resetpassword />} />
         </Routes>
       </BrowserRouter>
     </>
