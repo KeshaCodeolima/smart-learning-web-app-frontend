@@ -6,10 +6,24 @@ import { toast } from "react-toastify";
 function AdminLogin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState('');
     const navigate = useNavigate();
 
+    const validation = () => {
+        const newErrors = {};
+        if (!email) {
+            newErrors.email = "Email is Required.";
+        }
+        if (!password) {
+            newErrors.password = "Password is required.";
+        } else if (password.length < 6) {
+            newErrors.password = "Password Must be 6 Characters or More."
+        }
+        return newErrors;
+    };
+
     const Notify = () => {
-        toast.success("Check YOur Email Your Token Expire in 5 Minutes!", {
+        toast.success("Login Successful!", {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -37,12 +51,18 @@ function AdminLogin() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/api/users/admin-login", { email, password });
-
-            if (res.data.message === "Admin login successful") {
-                Notify();
+            const ValidationErrors = validation();
+            if (Object.keys(ValidationErrors).length > 0) {
+                setErrors(ValidationErrors);
             } else {
-                NotifyError();
+                const res = await axios.post("http://localhost:5000/api/users/admin-login", { email, password });
+
+                if (res.data.message === "Admin login successful") {
+                    Notify();
+                    localStorage.setItem("adminuser", JSON.stringify(res.data.admin));
+                } else {
+                    NotifyError();
+                }
             }
         } catch (error) {
             console.log(error);
@@ -58,9 +78,11 @@ function AdminLogin() {
                     <div className="logininput">
                         <label>Email: </label>
                         <input type="text" onChange={(e) => setEmail(e.target.value)} />
+                        {errors.email && <p className='errors'>{errors.email}</p>}
 
                         <label>Password: </label>
                         <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        {errors.password && <p className='errors'>{errors.password}</p>}
                     </div>
 
                     <div className="loginbtn">
