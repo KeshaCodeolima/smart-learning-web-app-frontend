@@ -10,6 +10,8 @@ import Dashboardprogress from "./Components/Dashboard/dashboardprogress/dashboar
 import { useEffect, useState } from "react";
 import About from "./Components/Header/About/about";
 import Contact from "./Components/Header/Contact/contact";
+import Dashboardtotaltopic from "./Components/Dashboard/dashboardprogress/dashboardtotaltopic";
+import Dashboardweakconcept from "./Components/Dashboard/dashboardprogress/dashboardweakconcept";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
@@ -32,6 +34,8 @@ function App() {
           <Route path="/progress" element={<Dashboardprogress />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/TotalTopic" element={<Dashboardtotaltopic />} />
+          <Route path="/WeakConcept" element={<Dashboardweakconcept />} />
         </Routes>
       </BrowserRouter>
     </>
