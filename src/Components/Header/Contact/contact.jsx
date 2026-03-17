@@ -11,6 +11,25 @@ function Contact() {
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
+    const [errors, setErrors] = useState({});
+
+    const validation = () => {
+        const newErrors = {};
+
+        if (!name) {
+            newErrors.name = "Name is Required.";
+        }
+        if (!email) {
+            newErrors.email = "Email is required.";
+        }
+        if (!subject) {
+            newErrors.subject = "Subject is required."
+        }
+        if (!message) {
+            newErrors.message = "Message is Rquired."
+        }
+        return newErrors;
+    };
 
     const Notify = () => {
         toast.success("Email Send Successfully", {
@@ -40,20 +59,25 @@ function Contact() {
 
     const handleEmialSend = async (e) => {
         e.preventDefault();
-        try {
-            const result = await axios.post('http://localhost:5000/api/users/email-send', { name, email, subject, message });
-            if (result.data === "Email send successful") {
-                Notify();
-                setName('');
-                setEmail('');
-                setSubject('');
-                setMessage('');
-            } else {
-                NotifyInfo();
+        const ValidationErrors = validation();
+        if (Object.keys(ValidationErrors).length > 0) {
+            setErrors(ValidationErrors);
+        } else {
+            try {
+                const result = await axios.post('http://localhost:5000/api/users/email-send', { name, email, subject, message });
+                if (result.data === "Email send successful") {
+                    Notify();
+                    setName('');
+                    setEmail('');
+                    setSubject('');
+                    setMessage('');
+                } else {
+                    NotifyInfo();
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error("Server Error!", { position: "top-center" });
             }
-        } catch (error) {
-            console.log(error);
-            toast.error("Server Error!", { position: "top-center" });
         }
     }
     return (
@@ -66,15 +90,47 @@ function Contact() {
                     <div className="contactleftside">
                         <form onSubmit={handleEmialSend}>
                             <h3>Get in Touch</h3>
-                            <input type="text" placeholder='Full Name' value={name}
-                                onChange={(e) => setName(e.target.value)} />
-                            <input type="email" placeholder='Email Address' value={email}
-                                onChange={(e) => setEmail(e.target.value)} />
-                            <input type="text" placeholder='Subject' value={subject} o
-                                nChange={(e) => setSubject(e.target.value)} />
-                            <textarea placeholder='Your Message' value={message}
-                                onChange={(e) => setMessage(e.target.value)}></textarea>
-                            <button type='submit'>Send Message</button>
+
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                {errors.name && <p className="errors">{errors.name}</p>}
+                            </div>
+
+                            <div className="form-group">
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                {errors.email && <p className="errors">{errors.email}</p>}
+                            </div>
+
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    placeholder="Subject"
+                                    value={subject}
+                                    onChange={(e) => setSubject(e.target.value)}
+                                />
+                                {errors.subject && <p className="errors">{errors.subject}</p>}
+                            </div>
+
+                            <div className="form-group">
+                                <textarea
+                                    placeholder="Your Message"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
+                                {errors.message && <p className="errors">{errors.message}</p>}
+                            </div>
+
+                            <button type="submit">Send Message</button>
                         </form>
                     </div>
                     <div className="contactrigthside">
