@@ -85,6 +85,9 @@ function Login() {
                         {errors.password && <p className='errors'>{errors.password}</p>}
                     </div>
                     <div className="loginfoget">
+                        <Link to={'/adminlogin'}>
+                            <label>Admin Login</label>
+                        </Link>
                         <Link to={'/forgot'} >
                             <label>Forget Password</label>
                         </Link>

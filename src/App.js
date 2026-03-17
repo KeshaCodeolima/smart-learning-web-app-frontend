@@ -14,6 +14,8 @@ import Dashboardtotaltopic from "./Components/Dashboard/dashboardprogress/dashbo
 import Dashboardweakconcept from "./Components/Dashboard/dashboardprogress/dashboardweakconcept";
 import Forgotpassword from "./Components/Login/forgotpassword";
 import Resetpassword from "./Components/Login/resetpassword";
+import AdminLogin from "./Components/Login/Admin/adminlogin";
+import Adminpage from "./Components/Login/Admin/adminpage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
@@ -40,6 +42,8 @@ function App() {
           <Route path="/WeakConcept" element={<Dashboardweakconcept />} />
           <Route path="/forgot" element={<Forgotpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
+          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route path="/adminpage" element={<Adminpage />} />
         </Routes>
       </BrowserRouter>
     </>
