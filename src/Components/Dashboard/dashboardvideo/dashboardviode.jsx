@@ -3,6 +3,7 @@ import './dashboardvideo.css';
 import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Dashboardviode() {
   const [filename, setFilename] = useState('');
@@ -11,6 +12,7 @@ function Dashboardviode() {
   const [videoFile, setVideoFile] = useState(null);
   const webcamRef = useRef(null);
   const mainVideoRef = useRef(null);
+  const [predictionHistory, setPredictionHistory] = useState([]);
 
   const handlefile = (e) => {
     if (e.target.files.length > 0) {
@@ -19,6 +21,7 @@ function Dashboardviode() {
       setFilename(file.name);
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+      setPredictionHistory([]);
     }
   };
 
@@ -56,14 +59,22 @@ function Dashboardviode() {
               body: JSON.stringify({ image: imageSrc }),
             });
             const data = await response.json();
-            const currentLabel = data.label;
-
-            setPrediction(data.label);
-
+            let currentLabel = data.label;
+            if (currentLabel === "Sad") {
+              currentLabel = "Confused";
+            }
+            setPredictionHistory(prev => [...prev, currentLabel]);
+            setPrediction(currentLabel);
             if (mainVideoRef.current) {
-              if (currentLabel === "happy") mainVideoRef.current.playbackRate = 1.5;
-              else if (currentLabel === "fear") mainVideoRef.current.playbackRate = 0.5;
-              else mainVideoRef.current.playbackRate = 1.0;
+              if (currentLabel === "Happy") {
+                mainVideoRef.current.playbackRate = 1.5;
+              } else if (currentLabel === "Confused") {
+                mainVideoRef.current.currentTime = Math.max(
+                  0,
+                  mainVideoRef.current.currentTime - 15
+                );
+                mainVideoRef.current.playbackRate = 0.5;
+              } else { mainVideoRef.current.playbackRate = 1.0; }
             }
           } catch (err) {
             console.error("Prediction Error: ", err);
@@ -75,12 +86,63 @@ function Dashboardviode() {
     return () => clearInterval(interval);
   }, [videoSrc])
 
+  const handelVideoEnd = () => {
+    if (predictionHistory.length === 0) {
+      alert('No Emotion Data Recorded!');
+      return;
+    }
+    const counts = {
+      Happy: 0, Confused: 0, Natural: 0
+    };
+    predictionHistory.forEach((emotion) => {
+      if (counts[emotion] !== undefined) {
+        counts[emotion]++;
+      }
+    });
+
+    const { Happy, Natural, Confused } = counts;
+    if (Happy > Natural && Happy > Confused) {
+      toast.success("😊 You were very happy during the video!", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored"
+      });
+    } else if (Natural > Happy && Natural > Confused) {
+      toast.success("👍 Great! You got a good understanding of the video.", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored"
+      });
+    } else if (Confused > Happy && Confused > Natural) {
+      toast.error("😟 You seemed confused. We recommend watching the video again.", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored"
+      });
+    } else if (Happy === Natural && Happy > Confused) {
+      toast.success("👍 Great! You got a good understanding of the video.", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored"
+      });
+    } else {
+      toast.info("🙂 Your learning performance was average. Try reviewing again.", {
+        position: "top-center",
+        autoClose: 4000,
+        theme: "colored"
+      });
+    }
+  }
+
   return (
     <>
       <div className="video-content-card">
         <div className="videomain">
           <h2>Watch Video with Your Emotions</h2>
-          <div style={{ position: 'fixed', bottom: 80, right: 20, width: 150, borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff' }}>
+          <div style={{
+            position: 'fixed', bottom: 80, right: 20, width: 150,
+            borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff'
+          }}>
             <Webcam
               audio={false}
               ref={webcamRef}
@@ -98,7 +160,7 @@ function Dashboardviode() {
           </div>
           <div className="videoinput">
             {videoSrc ? (
-              <video ref={mainVideoRef} key={videoSrc} width="100%" controls autoPlay>
+              <video ref={mainVideoRef} key={videoSrc} width="100%" controls autoPlay onEnded={handelVideoEnd}>
                 <source src={videoSrc} type="video/mp4" />
               </video>
             ) : (
@@ -113,6 +175,7 @@ function Dashboardviode() {
           <button className='proccesbtn' onClick={handleuploadfile}>Convert Video to Text</button>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }
