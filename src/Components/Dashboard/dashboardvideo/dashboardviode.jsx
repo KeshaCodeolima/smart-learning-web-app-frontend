@@ -3,6 +3,7 @@ import './dashboardvideo.css';
 import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Dashboardviode() {
   const [filename, setFilename] = useState('');
@@ -98,20 +99,67 @@ function Dashboardviode() {
         counts[emotion]++;
       }
     });
-    const { Happy, Natural, Confused } = counts;
-    let message = "";
-    if (Happy > Natural && Happy > Confused) {
-      message = "😊 You were very happy during the video!";
-    } else if (Natural > Happy && Natural > Confused) {
-      message = "👍 Great! You got a good understanding of the video.";
-    } else if (Confused > Happy && Confused > Natural) {
-      message = "😟 You seemed confused. We recommend watching the video again.";
-    } else if (Happy === Natural && Happy > Confused) {
-      message = "👏 Great! You got a good idea about this video.";
-    } else {
-      message = "🙂 Your learning performance was average. Try reviewing again.";
+    const Notify = () => {
+      toast.success("😊 You were very happy during the video!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored"
+      });
     }
-    alert(message);
+    const Notify1 = () => {
+      toast.success("👍 Great! You got a good understanding of the video.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored"
+      });
+    }
+    const Notify3 = () => {
+      toast.error("😟 You seemed confused. We recommend watching the video again.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored"
+      });
+    }
+    const Notify4 = () => {
+      toast.info("🙂 Your learning performance was average. Try reviewing again.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored"
+      });
+    }
+
+    const { Happy, Natural, Confused } = counts;
+    if (Happy > Natural && Happy > Confused) {
+      Notify();
+    } else if (Natural > Happy && Natural > Confused) {
+      Notify1();
+    } else if (Confused > Happy && Confused > Natural) {
+      Notify3();
+    } else if (Happy === Natural && Happy > Confused) {
+      Notify();
+    } else {
+      Notify4();
+    }
   }
 
   return (
@@ -155,6 +203,7 @@ function Dashboardviode() {
           <button className='proccesbtn' onClick={handleuploadfile}>Convert Video to Text</button>
         </div>
       </div>
+      <ToastContainer/>
     </>
   )
 }
