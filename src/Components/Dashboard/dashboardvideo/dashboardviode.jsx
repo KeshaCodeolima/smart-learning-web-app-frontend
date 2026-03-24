@@ -11,6 +11,7 @@ function Dashboardviode() {
   const [videoFile, setVideoFile] = useState(null);
   const webcamRef = useRef(null);
   const mainVideoRef = useRef(null);
+  const [predictionHistory, setPredictionHistory] = useState([]);
 
   const handlefile = (e) => {
     if (e.target.files.length > 0) {
@@ -19,6 +20,7 @@ function Dashboardviode() {
       setFilename(file.name);
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
+      setPredictionHistory([]);
     }
   };
 
@@ -56,14 +58,22 @@ function Dashboardviode() {
               body: JSON.stringify({ image: imageSrc }),
             });
             const data = await response.json();
-            const currentLabel = data.label;
-
-            setPrediction(data.label);
-
+            let currentLabel = data.label;
+            if (currentLabel === "Sad") {
+              currentLabel = "Confused";
+            }
+            setPredictionHistory(prev => [...prev, currentLabel]);
+            setPrediction(currentLabel);
             if (mainVideoRef.current) {
-              if (currentLabel === "happy") mainVideoRef.current.playbackRate = 1.5;
-              else if (currentLabel === "fear") mainVideoRef.current.playbackRate = 0.5;
-              else mainVideoRef.current.playbackRate = 1.0;
+              if (currentLabel === "Happy") {
+                mainVideoRef.current.playbackRate = 1.5;
+              } else if (currentLabel === "Confused") {
+                mainVideoRef.current.currentTime = Math.max(
+                  0,
+                  mainVideoRef.current.currentTime - 15
+                );
+                mainVideoRef.current.playbackRate = 0.5;
+              } else { mainVideoRef.current.playbackRate = 1.0; }
             }
           } catch (err) {
             console.error("Prediction Error: ", err);
@@ -75,12 +85,44 @@ function Dashboardviode() {
     return () => clearInterval(interval);
   }, [videoSrc])
 
+  const handelVideoEnd = () => {
+    if (predictionHistory.length === 0) {
+      alert('No Emotion Data Recorded!');
+      return;
+    }
+    const counts = {
+      Happy: 0, Confused: 0, Natural: 0
+    };
+    predictionHistory.forEach((emotion) => {
+      if (counts[emotion] !== undefined) {
+        counts[emotion]++;
+      }
+    });
+    const { Happy, Natural, Confused } = counts;
+    let message = "";
+    if (Happy > Natural && Happy > Confused) {
+      message = "😊 You were very happy during the video!";
+    } else if (Natural > Happy && Natural > Confused) {
+      message = "👍 Great! You got a good understanding of the video.";
+    } else if (Confused > Happy && Confused > Natural) {
+      message = "😟 You seemed confused. We recommend watching the video again.";
+    } else if (Happy === Natural && Happy > Confused) {
+      message = "👏 Great! You got a good idea about this video.";
+    } else {
+      message = "🙂 Your learning performance was average. Try reviewing again.";
+    }
+    alert(message);
+  }
+
   return (
     <>
       <div className="video-content-card">
         <div className="videomain">
           <h2>Watch Video with Your Emotions</h2>
-          <div style={{ position: 'fixed', bottom: 80, right: 20, width: 150, borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff' }}>
+          <div style={{
+            position: 'fixed', bottom: 80, right: 20, width: 150,
+            borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff'
+          }}>
             <Webcam
               audio={false}
               ref={webcamRef}
@@ -98,7 +140,7 @@ function Dashboardviode() {
           </div>
           <div className="videoinput">
             {videoSrc ? (
-              <video ref={mainVideoRef} key={videoSrc} width="100%" controls autoPlay>
+              <video ref={mainVideoRef} key={videoSrc} width="100%" controls autoPlay onEnded={handelVideoEnd}>
                 <source src={videoSrc} type="video/mp4" />
               </video>
             ) : (
