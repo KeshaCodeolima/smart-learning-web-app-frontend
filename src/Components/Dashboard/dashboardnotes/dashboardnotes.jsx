@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import './dashboardnotes.css';
 import { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 function Dashboardnotes() {
 
@@ -9,13 +11,14 @@ function Dashboardnotes() {
     const [language, setLanguage] = useState('None');
     const [summary, setSummary] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const {t}=useTranslation();
 
     const handleCreatNote = async () => {
         if (!noteContent)
-            return alert("Please Add Some Note First!")
+            return toast.info(t("noteRequired"), { position: "top-center", autoClose: 4000, theme: "colored" });
 
         if(language ==='None')
-            return alert("Please Select the Language You Want!")
+            return toast.info(t("selectLangNote"), { position: "top-center", autoClose: 4000, theme: "colored" });
 
         setIsLoading(true);
         try {
@@ -34,7 +37,7 @@ function Dashboardnotes() {
 
         } catch (error) {
             console.error("Error Summarizing:", error);
-            alert("Something went wrong with Note Summarizing")
+            toast.warn(t("noteError"), { position: "top-center", autoClose: 4000, theme: "colored" });
         } finally {
             setIsLoading(false)
         }
@@ -43,10 +46,10 @@ function Dashboardnotes() {
     return (
         <>
             <div className="notemain">
-                <h2>Summaries Your Notes</h2>
+                <h2>{t("notesTitle")}</h2>
                 <div className="notemain2">
                     <div className='language-container'>
-                        <label htmlFor="language">Select Language:</label>
+                        <label htmlFor="language">{t("selectLanguage")}:</label>
                         <select
                             className='language-selector'
                             id="language"
@@ -60,21 +63,21 @@ function Dashboardnotes() {
                         </select>
                     </div>
 
-                    <span>Note Content</span>
-                    <textarea name="question" placeholder='Add the Note Here to Summaraz' value={noteContent}
+                    <span>{t("noteContent")}</span>
+                    <textarea name="question" placeholder={t("notePlaceholder")} value={noteContent}
                         onChange={(e) => setNoteContent(e.target.value)}></textarea>
                     <div className="notemainbtn">
                         <button onClick={handleCreatNote} disabled={isLoading}>
-                            {isLoading ? "Summarizing..." : "Create Short Note"}
+                            {isLoading ? t("summarizing") : t("createShortNote")}
                         </button>
                         <Link to={'/dashboard'}>
-                            <button className='notebtn'>Back to Dashboard</button>
+                            <button className='notebtn'>{t("backDashboard")}</button>
                         </Link>
                     </div>
                 </div>
                 {summary && (
                     <div className="summary-result" style={{ marginTop: '20px', textAlign: 'left' }} >
-                        <h3>Short Note Result:</h3>
+                        <h3>{t("shortNoteResult")}:</h3>
                         <div className="summary-box" style={{ background: '#f9f9f9', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }} >
                             <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }} >{summary}</pre>
                         </div>
