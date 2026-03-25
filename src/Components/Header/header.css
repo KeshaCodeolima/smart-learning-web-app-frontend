@@ -143,13 +143,15 @@ ul.settingicon {
   font-weight: 600;
   cursor: pointer;
   margin-left: -50px;
-  background: linear-gradient(135deg, #667eea, #141d66);
+  margin-right: -102px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   transition: all 0.3s ease;
 }
 
 .lang-select:hover {
-  background: linear-gradient(135deg, #88b7ff, #19539f);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .lang-select option {
