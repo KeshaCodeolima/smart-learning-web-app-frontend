@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function Resetpassword() {
     const { token } = useParams();
     const [password, setPassword] = useState("");
+    const {t}=useTranslation();
 
     const updatePassword = async (e) => {
         e.preventDefault();
@@ -17,14 +19,14 @@ function Resetpassword() {
     }
     return (
         <div className="loginmain">
-            <h2>Reset Password</h2>
+            <h2>{t("resetPassword")}</h2>
             <form onSubmit={updatePassword}>
                 <div className="logininput">
-                    <label>New Password </label>
+                    <label>{t("newPassword")}</label>
                     <input type="password" onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="loginbtn">
-                    <button type='submit'>Update Password</button>
+                    <button type='submit'>{t("updatePassword")}</button>
                 </div>
             </form>
         </div>
