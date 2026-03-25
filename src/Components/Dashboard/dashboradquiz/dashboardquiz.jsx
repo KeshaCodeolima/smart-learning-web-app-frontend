@@ -3,6 +3,7 @@ import './dashboardquiz.css';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function Dashboardquiz() {
     const [quiznote, setQuiznote] = useState('');
@@ -18,9 +19,10 @@ function Dashboardquiz() {
     const [Autolanguage, setAutoLanguage] = useState('None')
     const [autoQuizNote, setAutoQuizNote] = useState('')
     const [autoQuizTopic, setAutoQuizTopic] = useState('')
+    const {t}=useTranslation();
 
     const NotifyInfo = () => {
-        toast.info("Please Add Some Note to Create Quiz", {
+        toast.info(t("noteRequired"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -33,7 +35,7 @@ function Dashboardquiz() {
     }
 
     const NotifyError = () => {
-        toast.warn("Something went wrong with Quiz", {
+        toast.warn(t("quizError"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -46,7 +48,7 @@ function Dashboardquiz() {
     }
 
     const Notify = () => {
-        toast.success("Quiz Submited", {
+        toast.success(t("quizSubmit"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -59,7 +61,7 @@ function Dashboardquiz() {
     }
 
     const NotifyInfo1 = () => {
-        toast.info("Please Select the Language", {
+        toast.info(t("selectLangMsg"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -72,7 +74,7 @@ function Dashboardquiz() {
     }
 
     const NotifyInfo2 = () => {
-        toast.info("Please Enter Topic", {
+        toast.info(t("enterTopic"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -200,60 +202,54 @@ function Dashboardquiz() {
     return (
         <>
             <div className="quizmain">
-                {/* Dynamic Title based on whether quiz is active */}
-                <h2>{quiz.length > 0 ? 'Quiz in Progress' : 'Create New Quiz'}</h2>
+                <h2>{quiz.length > 0 ? t("quizProgress") : t("createQuiz")}</h2>
 
-                {/* 1. SETUP VIEW: Show this ONLY if no quiz has been generated yet */}
                 {quiz.length === 0 ? (
                     <div className="quizmain2">
-                        {/* Manual Section */}
                         <div className="quiznormal">
                             <div className='language-container-quiz'>
-                                <label>Select Language:</label>
+                                <label>{t("selectLanguage")}:</label>
                                 <select className='language-selector-quiz' value={language} onChange={(e) => setLanguage(e.target.value)}>
-                                    <option value="None">None</option>
+                                     <option value="None">None</option>
                                     <option value="English">English</option>
                                     <option value="Sinhala">Sinhala</option>
                                     <option value="Tamil">Tamil</option>
                                 </select>
                             </div>
-                            <span>Create New Quiz</span>
-                            <input type="text" placeholder='Quiz Title' value={quiztopic} onChange={(e) => setQuizTopic(e.target.value)} />
+                            <span>{t("createQuiz")}</span>
+                            <input type="text" placeholder={t("quizTopic")} value={quiztopic} onChange={(e) => setQuizTopic(e.target.value)} />
                             <textarea
-                                placeholder='Add Question / Prompt here...'
+                                placeholder={t("addPrompt")}
                                 className='inputbox'
                                 value={quiznote}
                                 onChange={(e) => setQuiznote(e.target.value)}
                             />
                             <button onClick={handlequiz} disabled={isloading}>
-                                {isloading ? 'Generating...' : 'Create Quiz'}
+                                {isloading ? t("generating") : t("createBtn")}
                             </button>
                         </div>
 
-                        {/* Automated Section */}
                         <div className="quizauto">
                             <div className='language-container-quiz'>
-                                <label>Select Language:</label>
+                                <label>{t("selectLanguage")}:</label>
                                 <select className='language-selector-quiz' value={Autolanguage} onChange={(e) => setAutoLanguage(e.target.value)}>
-                                    <option value="None">None</option>
+                                     <option value="None">None</option>
                                     <option value="English">English</option>
                                     <option value="Sinhala">Sinhala</option>
                                     <option value="Tamil">Tamil</option>
                                 </select>
                             </div>
-                            <span>Automated Quiz from Video</span>
-                            <input type="text" placeholder='Quiz Topic' onChange={(e) => setAutoQuizTopic(e.target.value)} />
-                            <textarea value={paragraph} readOnly className='inputbox' placeholder="Transcript text will appear here..."></textarea>
-                            <button style={{ marginRight: '340px' }} onClick={handleGetQuiz}>Get Text</button>
-                            <button style={{ marginLeft: '340px', marginTop: '-40px' }} onClick={handleAutoQuiz} disabled={isAutoLoading || !paragraph}>
-                                {isAutoLoading ? 'Generating...' : 'Create Quiz'}
+                            <span>{t("autoQuiz")}</span>
+                            <input type="text" placeholder={t("quizTopic")} onChange={(e) => setAutoQuizTopic(e.target.value)} />
+                            <textarea value={paragraph} readOnly className='inputbox' placeholder={t("transcriptPlaceholder")}></textarea>
+                            <button style={{ marginRight: '280px' }} onClick={handleGetQuiz}>{t("getText")}</button>
+                            <button style={{ marginLeft: '280px', marginTop: '-40px' }} onClick={handleAutoQuiz} disabled={isAutoLoading || !paragraph}>
+                                {isAutoLoading ? t("generating") : t("createBtn")}
                             </button>
 
                         </div>
                     </div>
                 ) : (
-                    /* 2. QUIZ VIEW: Show this ONLY when quiz data exists. 
-                       This sits OUTSIDE quizmain2 to occupy full width */
                     <div className="quiz-active-view" style={{ width: '100%', maxWidth: '800px' }}>
                         <div className="quiz-container">
                             <div className="quiz-result">
@@ -281,20 +277,20 @@ function Dashboardquiz() {
 
                             {showResult && (
                                 <div className="quiz-score" style={{ textAlign: 'center', margin: '20px 0' }}>
-                                    <h2>Your Score: {score} / {quiz.length}</h2>
+                                    <h2>{t("yourScore")} {score} / {quiz.length}</h2>
                                 </div>
                             )}
 
                             <div className="quiz-action-container">
-                                {!showResult && <button className="submit-quiz-btn" onClick={handleSubmitQuiz}>Submit Quiz</button>}
-                                <button className="exit-btn" onClick={handleExitQuiz}>Exit Quiz</button>
+                                {!showResult && <button className="submit-quiz-btn" onClick={handleSubmitQuiz}>{t("submitQuiz")}</button>}
+                                <button className="exit-btn" onClick={handleExitQuiz}>{t("exitQuiz")}</button>
                             </div>
                         </div>
                     </div>
                 )}
 
                 <Link to={'/dashboard'} style={{ marginTop: '20px' }}>
-                    <button className="back-btn">Back to Dashboard</button>
+                    <button className="back-btn">{t("backDashboard")}</button>
                 </Link>
             </div>
         </>
