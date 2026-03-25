@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function Dashboardviode() {
   const [filename, setFilename] = useState('');
@@ -13,6 +14,7 @@ function Dashboardviode() {
   const webcamRef = useRef(null);
   const mainVideoRef = useRef(null);
   const [predictionHistory, setPredictionHistory] = useState([]);
+  const { t } = useTranslation();
 
   const handlefile = (e) => {
     if (e.target.files.length > 0) {
@@ -28,7 +30,7 @@ function Dashboardviode() {
   const handleuploadfile = async () => {
     const user = JSON.parse(localStorage.getItem('currentuser'));
     if (!videoFile) {
-      return alert('Please Select Some Video');
+      return toast.info(t("selectVideo"), { position: "top-center", autoClose: 4000, theme: "colored" });
     }
     try {
       const formData = new FormData();
@@ -39,10 +41,10 @@ function Dashboardviode() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log(formData);
-      alert('Video Send Successfully Check the Quiz Section!');
+      toast.success(t("uploadSuccess"), { position: "top-center", autoClose: 4000, theme: "colored" });
     } catch (error) {
       console.error('Upload Error:', error);
-      alert('Uploading Error!');
+      toast.error(t("uploadError"), { position: "top-center", autoClose: 4000, theme: "colored" });
     }
   };
 
@@ -88,7 +90,7 @@ function Dashboardviode() {
 
   const handelVideoEnd = () => {
     if (predictionHistory.length === 0) {
-      alert('No Emotion Data Recorded!');
+      toast.info(t("noEmotion"), { position: "top-center", autoClose: 4000, theme: "colored" });
       return;
     }
     const counts = {
@@ -102,35 +104,15 @@ function Dashboardviode() {
 
     const { Happy, Natural, Confused } = counts;
     if (Happy > Natural && Happy > Confused) {
-      toast.success("😊 You were very happy during the video!", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "colored"
-      });
+      toast.success(t("happyMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     } else if (Natural > Happy && Natural > Confused) {
-      toast.success("👍 Great! You got a good understanding of the video.", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "colored"
-      });
+      toast.success(t("goodMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     } else if (Confused > Happy && Confused > Natural) {
-      toast.error("😟 You seemed confused. We recommend watching the video again.", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "colored"
-      });
+      toast.error(t("confusedMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     } else if (Happy === Natural && Happy > Confused) {
-      toast.success("👍 Great! You got a good understanding of the video.", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "colored"
-      });
+      toast.success(t("goodMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     } else {
-      toast.info("🙂 Your learning performance was average. Try reviewing again.", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "colored"
-      });
+      toast.info(t("averageMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     }
   }
 
@@ -138,7 +120,7 @@ function Dashboardviode() {
     <>
       <div className="video-content-card">
         <div className="videomain">
-          <h2>Watch Video with Your Emotions</h2>
+          <h2>{t("videoTitle")}</h2>
           <div style={{
             position: 'fixed', bottom: 80, right: 20, width: 150,
             borderRadius: '10px', overflow: 'hidden', border: '2px solid #007bff'
@@ -151,12 +133,12 @@ function Dashboardviode() {
               videoConstraints={{ advanced: [{ zoom: 2.0 }] }}
             />
             <div style={{ background: '#000', color: '#fff', textAlign: 'center', fontSize: '12px' }}>
-              Status: {prediction}
+              {t("status")}: {prediction}
             </div>
           </div>
           <div className="videoadd">
             <input type="file" accept='video' onChange={handlefile} />
-            <span>Video Selected: {filename} </span>
+            <span>{t("videoSelected")}: {filename} </span>
           </div>
           <div className="videoinput">
             {videoSrc ? (
@@ -165,14 +147,14 @@ function Dashboardviode() {
               </video>
             ) : (
               <div className="video-placeholder">
-                <span> Please Select a video to play. </span>
+                <span>{t("selectVideoToPlay")}</span>
               </div>
             )}
           </div>
           <div className="videobtn">
-            <Link to={'/dashboard'}><button>Back to Dashboard</button></Link>
+            <Link to={'/dashboard'}><button>{t("backDashboard")}</button></Link>
           </div>
-          <button className='proccesbtn' onClick={handleuploadfile}>Convert Video to Text</button>
+          <button className='proccesbtn' onClick={handleuploadfile}>{t("convertText")}</button>
         </div>
       </div>
       <ToastContainer />

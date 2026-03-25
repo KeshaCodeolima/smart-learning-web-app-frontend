@@ -5,6 +5,7 @@ import { faAt, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function Contact() {
     const [name, setName] = useState('');
@@ -12,6 +13,7 @@ function Contact() {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({});
+    const {t}=useTranslation();
 
     const validation = () => {
         const newErrors = {};
@@ -32,7 +34,7 @@ function Contact() {
     };
 
     const Notify = () => {
-        toast.success("Email Send Successfully", {
+        toast.success(t("emailSuccess"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -45,7 +47,7 @@ function Contact() {
     }
 
     const NotifyInfo = () => {
-        toast.info("YOur Email Not Send!", {
+        toast.info(t("emailFail"), {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -76,7 +78,7 @@ function Contact() {
                 }
             } catch (error) {
                 console.log(error);
-                toast.error("Server Error!", { position: "top-center" });
+                toast.error(t("serverError"), { position: "top-center" });
             }
         }
     }
@@ -84,57 +86,57 @@ function Contact() {
         <>
             <div className="contactmain">
                 <div className="contactmain1">
-                    <h1>Connect<h5>with</h5>Smart Learn AI</h1>
+                    <h1>{t("connect")}<h5>{t("with")}</h5>Smart Learn AI</h1>
                 </div>
                 <div className="contactmain2">
                     <div className="contactleftside">
                         <form onSubmit={handleEmialSend}>
-                            <h3>Get in Touch</h3>
+                            <h3>{t("getInTouch")}</h3>
 
                             <div className="form-group">
                                 <input
                                     type="text"
-                                    placeholder="Full Name"
+                                    placeholder={t("fullName")}
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
-                                {errors.name && <p className="errors">{errors.name}</p>}
+                                {errors.name && <p className="errors">{t("nameRequired")}</p>}
                             </div>
 
                             <div className="form-group">
                                 <input
                                     type="email"
-                                    placeholder="Email Address"
+                                    placeholder={t("emailAddress")}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                {errors.email && <p className="errors">{errors.email}</p>}
+                                {errors.email && <p className="errors">{t("emailRequired")}</p>}
                             </div>
 
                             <div className="form-group">
                                 <input
                                     type="text"
-                                    placeholder="Subject"
+                                    placeholder={t("subject")}
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)}
                                 />
-                                {errors.subject && <p className="errors">{errors.subject}</p>}
+                                {errors.subject && <p className="errors">{t("subjectRequired")}</p>}
                             </div>
 
                             <div className="form-group">
                                 <textarea
-                                    placeholder="Your Message"
+                                    placeholder={t("message")}
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                 ></textarea>
-                                {errors.message && <p className="errors">{errors.message}</p>}
+                                {errors.message && <p className="errors">{t("messageRequired")}</p>}
                             </div>
 
-                            <button type="submit">Send Message</button>
+                            <button type="submit">{t("sendMessage")}</button>
                         </form>
                     </div>
                     <div className="contactrigthside">
-                        <h3>Contact Information</h3>
+                        <h3>{t("contactInfo")}</h3>
                         <div className="rigthsidephone">
                             <label> <FontAwesomeIcon icon={faPhone} /> </label>
                             <p>+94 765858504</p>
@@ -150,7 +152,7 @@ function Contact() {
                     </div>
                 </div>
                 <div className="contactbtn">
-                    <Link to={'/'}><button>Back</button></Link>
+                    <Link to={'/'}><button>{t("back")}</button></Link>
                 </div>
             </div>
             <ToastContainer />

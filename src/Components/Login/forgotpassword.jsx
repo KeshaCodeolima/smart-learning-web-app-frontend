@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 
 function Forgotpassword() {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const {t}=useTranslation();
 
     const Notify = () => {
         toast.success("Check YOur Email Your Token Expire in 5 Minutes!", {
@@ -50,17 +52,17 @@ function Forgotpassword() {
     return (
         <>
             <div className="loginmain">
-                <h2>Renew Password</h2>
+                <h2>{t("renewPassword")}</h2>
                 <form onSubmit={handleEmail}>
                     <div className="logininput">
-                        <label>Enter Email </label>
+                        <label>{t("enterEmail")}</label>
                         <input type="text" onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="loginbtn">
-                        <button type='submit'>Send Reset Link</button>
+                        <button type='submit'>{t("sendResetLink")}</button>
                     </div>
                     <div className="loginlinks">
-                        <label>You Found the Password <Link to={'/'}>Login</Link>.</label>
+                        <label>{t("foundPassword")}{' '}<Link to={'/'}>{t("login")}</Link>.</label>
                     </div>
                 </form>
             </div>

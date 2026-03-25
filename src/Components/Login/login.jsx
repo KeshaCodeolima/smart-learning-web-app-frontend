@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 function Login() {
 
@@ -11,23 +12,24 @@ function Login() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const validation = () => {
         const newErrors = {};
 
         if (!username) {
-            newErrors.username = "User Name is Required.";
+            newErrors.username = t("usernameRequired");
         }
         if (!password) {
-            newErrors.password = "Password is required.";
+            newErrors.password = t("passwordRequired");
         } else if (password.length < 6) {
-            newErrors.password = "Password Must be 6 Characters or More."
+            newErrors.password = t("passwordLength")
         }
         return newErrors;
     };
 
     const Notify = () => {
-        toast.success("Login Successfully", {
+        toast.success(t("loginSuccess"), {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -40,7 +42,7 @@ function Login() {
         });
     }
     const NotifyInfo = () => {
-        toast.info("UserName or Password Incorrect", {
+        toast.info(t("loginError"), {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -73,30 +75,30 @@ function Login() {
     return (
         <>
             <div className="loginmain">
-                <h2>Login</h2>
+                <h2>{t("login")}</h2>
                 <form onSubmit={login}>
                     <div className="logininput">
-                        <label>User Name: </label>
+                        <label>{t("user_name")}:  </label>
                         <input type="text" onChange={(e) => setUsername(e.target.value)} />
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
-                        <label>Password: </label>
+                        <label>{t("password")}: </label>
                         <input type="password" onChange={(e) => setPassword(e.target.value)} />
                         {errors.password && <p className='errors'>{errors.password}</p>}
                     </div>
                     <div className="loginfoget">
                         <Link to={'/adminlogin'}>
-                            <label>Admin Login</label>
+                            <label>{t("adminLogin")}</label>
                         </Link>
                         <Link to={'/forgot'} >
-                            <label>Forget Password</label>
+                            <label>{t("forgotPassword")}</label>
                         </Link>
                     </div>
                     <div className="loginbtn">
-                        <button>Login</button>
+                        <button>{t("login")}</button>
                     </div>
                     <div className="loginlinks">
-                        <label>Already not have a Account <Link to={'/signup'}>Signup</Link>.</label>
+                        <label>{t("noAccount")} <Link to={'/signup'}>{t("signup")}</Link>.</label>
                     </div>
                 </form>
             </div>

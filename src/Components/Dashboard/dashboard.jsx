@@ -4,40 +4,42 @@ import Quiz from '../../Images/Quiz.png';
 import ShortNote from '../../Images/ShortNote.png';
 import Progres from '../../Images/Progres.png';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Dashboard() {
+    const {t}=useTranslation();
     return (
         <>
             <div className="dashmain">
-                <h2>DashBoard</h2>
+                <h2>{t("dashboard")}</h2>
                 <div className="dashmain2">
                     <div className="dashsection">
                         <Link to={'/video'}>
                             <div className="dashvideo">
                                 <img src={Camera} alt="Camera" className='image' />
-                                <p>Watch video with Your Emotions</p>
-                                <span>Adjusts video playback speed based on your emotions understanding.</span>
+                                <p>{t("videoTitle")}</p>
+                                <span>{t("videoDesc")}</span>
                             </div>
                         </Link>
                         <Link to={'/quiz'}>
                             <div className="dashquiz">
                                 <img src={Quiz} alt="Quiz" className='image' />
-                                <p>Answer Your Quiz</p>
-                                <span>Creates quizzes based on your learning progress to test your knowledge.</span>
+                                <p>{t("quizTitle")}</p>
+                                <span>{t("quizDesc")}</span>
                             </div>
                         </Link>
                         <Link to={'/note'}>
                             <div className="dashshort">
                                 <img src={ShortNote} alt="ShortNote" className='image' />
-                                <p>Make Short Notes</p>
-                                <span>Lets you quickly make notes while studying to summarize important points.</span>
+                                <p>{t("noteTitle")}</p>
+                                <span>{t("noteDesc")}</span>
                             </div>
                         </Link>
                         <Link to={'/progress'}>
                             <div className="dashprogres">
                                 <img src={Progres} alt="Progress" className='image' />
-                                <p>Check Your Progress</p>
-                                <span>Shows your learning stats, like quiz scores and weak areas, over time.</span>
+                                <p>{t("progressTitle")}</p>
+                                <span>{t("progressDesc")}</span>
                             </div>
                         </Link>
                     </div>

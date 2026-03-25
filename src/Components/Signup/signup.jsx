@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 function Signup() {
     const [name, setName] = useState('');
@@ -13,36 +14,37 @@ function Signup() {
     const [reenterpassword, setReenterpassword] = useState('');
     const [errors, setErrors] = useState('');
     const navigate = useNavigate();
+    const {t}=useTranslation();
 
     const validation = () => {
 
         const newErrors = {};
         if (!name) {
-            newErrors.name = "Name is Required."
+            newErrors.name = t("nameRequired")
         }
         if (!email) {
-            newErrors.email = "Email is Required."
+            newErrors.email = t("emailRequired");
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.email = "Email is not Valid."
+            newErrors.email = t("emailInvalid");
         }
         if (!username) {
-            newErrors.username = "User Name is Required."
+            newErrors.username = t("usernameRequired");
         }
         if (!password) {
-            newErrors.password = "Password is Required."
+            newErrors.password = t("passwordRequired");
         } else if (password.length < 6) {
-            newErrors.password = "Password Must be 6 Characters or More."
+            newErrors.password = t("passwordLength");
         }
         if (!reenterpassword) {
-            newErrors.reenterpassword = "Reenter Password is Required."
+            newErrors.reenterpassword = t("reenterRequired");
         } else if (password !== reenterpassword) {
-            newErrors.reenterpassword = "Reenter Password is not Match to Previous Password."
+            newErrors.reenterpassword = t("passwordMismatch");
         }
         return newErrors;
     };
 
     const Notify = () => {
-            toast.success("Register Successfully", {
+            toast.success(t("registerSuccess"), {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -55,7 +57,7 @@ function Signup() {
             });
         }
     const NotifyInfo = () => {
-        toast.warn("Register Fail! Try Again", {
+        toast.warn(t("registerFail"), {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -86,36 +88,36 @@ function Signup() {
     return (
         <>
             <div className="signupmain">
-                <h2>Register</h2>
+                <h2>{t("register")}</h2>
                 <form onSubmit={register}>
                     <div className="signupinputs">
 
-                        <label>Name:</label>
+                        <label>{t("name")}:</label>
                         <input type="text" name="" id="" onChange={(e) => setName(e.target.value)} />
                         {errors.name && <p className='errors'>{errors.name}</p>}
 
-                        <label>Email:</label>
+                        <label>{t("email")}:</label>
                         <input type="text" name="" id="" onChange={(e) => setEmail(e.target.value)} />
                         {errors.email && <p className='errors'>{errors.email}</p>}
 
-                        <label>User Name:</label>
+                        <label>{t("username")}:</label>
                         <input type="text" name="" id="" onChange={(e) => setUsername(e.target.value)} />
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
-                        <label>Password:</label>
+                        <label>{t("password")}:</label>
                         <input type="password" name="" id="" onChange={(e) => setPassword(e.target.value)} />
                         {errors.password && <p className='errors'>{errors.password}</p>}
 
-                        <label>Reenter Password:</label>
+                        <label>{t("reenterPassword")}:</label>
                         <input type="password" name="" id="" onChange={(e) => setReenterpassword(e.target.value)} />
                         {errors.reenterpassword && <p className='errors'>{errors.reenterpassword}</p>}
 
                     </div>
                     <div className="signupbtn">
-                        <button type='submit'>Register</button>
+                        <button type='submit'>{t("register")}</button>
                     </div>
                     <div className="signuplink">
-                        <span>Already have a Account <Link to={'/'}>Login</Link>. </span>
+                        <span> {t("alreadyHaveAccount")} <Link to={'/'}>{t("login")}</Link>. </span>
                     </div>
                 </form>
             </div>
