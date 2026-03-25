@@ -5,13 +5,19 @@ import Settings from './Settings/settings';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
   const [isopen, setIsopen] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
+  const changeLang = (lng) => {
+    i18n.changeLanguage(lng);
+  }
 
   const NotifyWarning = () => {
-    toast.warning("Please Login To Page", {
+    toast.warning(t('loginWarning'), {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -22,7 +28,7 @@ function Header() {
       theme: "colored",
     });
   }
-
+  
   const handledash = (e) => {
     e.preventDefault();
     const isLoggedIn = JSON.parse(localStorage.getItem("keepLoggedIn"));
@@ -39,10 +45,18 @@ function Header() {
         <h2>Smart Learning Web Application </h2>
         <div className="headerlabel">
           <ul>
-            <li onClick={handledash}>Home</li>
-            <Link to={'/about'}><li>About</li></Link>
-            <Link to={'/contact'}><li>Contact Us</li></Link>
+            <li onClick={handledash}>{t('home')}</li>
+            <Link to={'/about'}><li>{t('about')}</li></Link>
+            <Link to={'/contact'}><li>{t('contact')}</li></Link>
           </ul>
+          <select
+            className="lang-select"
+            value={i18n.language}
+            onChange={(e) => changeLang(e.target.value)}>
+            <option value="en">EN</option>
+            <option value="si">සි</option>
+            <option value="ta">த</option>
+          </select>
           <ul className='settingicon' onClick={() => setIsopen(true)}>
             <img src={Setting} alt="Setting" />
           </ul>
