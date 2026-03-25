@@ -28,7 +28,7 @@ function Header() {
       theme: "colored",
     });
   }
-  
+
   const handledash = (e) => {
     e.preventDefault();
     const isLoggedIn = JSON.parse(localStorage.getItem("keepLoggedIn"));
@@ -53,9 +53,9 @@ function Header() {
             className="lang-select"
             value={i18n.language}
             onChange={(e) => changeLang(e.target.value)}>
-            <option value="en">EN</option>
-            <option value="si">සි</option>
-            <option value="ta">த</option>
+            <option value="en">English</option>
+            <option value="si">සිංහල</option>
+            <option value="ta">தமிழ்</option>
           </select>
           <ul className='settingicon' onClick={() => setIsopen(true)}>
             <img src={Setting} alt="Setting" />
