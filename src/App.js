@@ -16,6 +16,7 @@ import Forgotpassword from "./Components/Login/forgotpassword";
 import Resetpassword from "./Components/Login/resetpassword";
 import AdminLogin from "./Components/Login/Admin/adminlogin";
 import Adminpage from "./Components/Login/Admin/adminpage";
+import './i18n';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
