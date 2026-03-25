@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next';
 
 function Adminpage() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState('');
+    const { t } = useTranslation();
 
     const handleAdmin = () => {
         localStorage.clear();
@@ -35,15 +37,15 @@ function Adminpage() {
             <div className="admindashboard">
                 <button style={{ color: 'white', background: '#1b458f', padding: '8px 24px', fontSize: '16px' }}
                     onClick={handleAdmin}>
-                    Logout
+                    {t("logout")}
                 </button>
-                <h2>All Users in Smart Learning</h2>
+                <h2>{t("allUsers")}</h2>
                 <div className="admindashboardinput">
-                    <h3 style={{ color: '#1b458f' }}>Total Users: {users.length} </h3>
+                    <h3 style={{ color: '#1b458f' }}>{t("totalUsers")}: {users.length} </h3>
                     <input
                         style={{ width: '30%', padding: '10px', border: 'none', borderRadius: '12px', outline: 'none' }}
                         type="text"
-                        placeholder="Search users..."
+                        placeholder={t("searchUsers")}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -51,10 +53,10 @@ function Adminpage() {
                 <table border="1" cellPadding="10">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>UserName</th>
-                            <th>Delete Users</th>
+                            <th>{t("name")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("user_name")}</th>
+                            <th>{t("delete")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,7 +72,7 @@ function Adminpage() {
                                     <td>{user.email}</td>
                                     <td>{user.username}</td>
                                     <td>
-                                        <button onClick={() => deleteUser(user._id)}>Delete</button>
+                                        <button onClick={() => deleteUser(user._id)}>{t("delete")}</button>
                                     </td>
                                 </tr>
                             ))}
