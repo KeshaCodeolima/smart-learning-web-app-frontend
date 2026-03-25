@@ -139,8 +139,16 @@ function Dashboardquiz() {
         try {
             const response = await axios.post('http://localhost:5000/api/users/text', { userId: user.id })
             const dbText = response.data.text
+            const dbLanguage = response.data.language
+            console.log(response.data);
+            
+            const formattedLanguage = dbLanguage
+            ? dbLanguage.charAt(0).toUpperCase() + dbLanguage.slice(1)
+            : 'None';
+
             setParagraph(dbText);
             setAutoQuizNote(dbText);
+            setAutoLanguage(formattedLanguage)
             setQuiznote('')
         } catch (error) {
             console.error("Error fetching automated quiz:", error);
@@ -236,11 +244,11 @@ function Dashboardquiz() {
                             <span>Automated Quiz from Video</span>
                             <input type="text" placeholder='Quiz Topic' onChange={(e) => setAutoQuizTopic(e.target.value)} />
                             <textarea value={paragraph} readOnly className='inputbox' placeholder="Transcript text will appear here..."></textarea>
-                                <button style={{marginRight:'340px' }} onClick={handleGetQuiz}>Get Text</button>
-                                <button style={{marginLeft:'340px', marginTop: '-40px' }} onClick={handleAutoQuiz} disabled={isAutoLoading || !paragraph}>
-                                    {isAutoLoading ? 'Generating...' : 'Create Quiz'}
-                                </button>
-                            
+                            <button style={{ marginRight: '340px' }} onClick={handleGetQuiz}>Get Text</button>
+                            <button style={{ marginLeft: '340px', marginTop: '-40px' }} onClick={handleAutoQuiz} disabled={isAutoLoading || !paragraph}>
+                                {isAutoLoading ? 'Generating...' : 'Create Quiz'}
+                            </button>
+
                         </div>
                     </div>
                 ) : (
