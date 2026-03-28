@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Signup() {
     const [name, setName] = useState('');
@@ -13,8 +14,10 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [reenterpassword, setReenterpassword] = useState('');
     const [errors, setErrors] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword1, setShowPassword1] = useState(false);
     const navigate = useNavigate();
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     const validation = () => {
 
@@ -44,18 +47,18 @@ function Signup() {
     };
 
     const Notify = () => {
-            toast.success(t("registerSuccess"), {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                onClose: () => navigate('/')
-            });
-        }
+        toast.success(t("registerSuccess"), {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            onClose: () => navigate('/')
+        });
+    }
     const NotifyInfo = () => {
         toast.warn(t("registerFail"), {
             position: "top-center",
@@ -77,9 +80,9 @@ function Signup() {
         } else {
             axios.post('http://localhost:5000/api/users/register', { name, email, username, password })
                 .then(result => {
-                    if(result.data === 'Successful'){
+                    if (result.data === 'Successful') {
                         Notify();
-                    }else{
+                    } else {
                         NotifyInfo();
                     }
                 }).catch(error => console.log(error));
@@ -105,11 +108,21 @@ function Signup() {
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
                         <label>{t("password")}:</label>
-                        <input type="password" name="" id="" onChange={(e) => setPassword(e.target.value)} />
+                        <div className='password-field'>
+                            <input type={showPassword ? "text" : "password"} onChange={(e) => setPassword(e.target.value)} />
+                            <span className='eye-icon' onClick={(e) => setShowPassword(!showPassword)}>
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            </span>
+                        </div>
                         {errors.password && <p className='errors'>{errors.password}</p>}
 
                         <label>{t("reenterPassword")}:</label>
-                        <input type="password" name="" id="" onChange={(e) => setReenterpassword(e.target.value)} />
+                        <div className='password-field'>
+                            <input type={showPassword1 ? "text" : "password"} onChange={(e) => setReenterpassword(e.target.value)} />
+                            <span className='eye-icon' onClick={(e) => setShowPassword1(!showPassword1)}>
+                                {showPassword1 ? <FaEye /> : <FaEyeSlash />}
+                            </span>
+                        </div>
                         {errors.reenterpassword && <p className='errors'>{errors.reenterpassword}</p>}
 
                     </div>
@@ -121,7 +134,7 @@ function Signup() {
                     </div>
                 </form>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </>
     )
 }
