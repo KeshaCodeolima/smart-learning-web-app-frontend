@@ -5,12 +5,14 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -83,7 +85,11 @@ function Login() {
                         {errors.username && <p className='errors'>{errors.username}</p>}
 
                         <label>{t("password")}: </label>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <div className='password-field'>
+                            <input type={showPassword ? "text" : "password"} onChange={(e) => setPassword(e.target.value)} />
+                            <span className='eye-icon' onClick={(e) => setShowPassword(!showPassword)}>
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}</span>
+                        </div>
                         {errors.password && <p className='errors'>{errors.password}</p>}
                     </div>
                     <div className="loginfoget">
