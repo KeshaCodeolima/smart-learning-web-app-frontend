@@ -2,11 +2,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Resetpassword() {
     const { token } = useParams();
     const [password, setPassword] = useState("");
-    const {t}=useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
+    const { t } = useTranslation();
 
     const updatePassword = async (e) => {
         e.preventDefault();
@@ -23,7 +25,11 @@ function Resetpassword() {
             <form onSubmit={updatePassword}>
                 <div className="logininput">
                     <label>{t("newPassword")}</label>
-                    <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                    <div className='password-field'>
+                        <input type={showPassword ? "text" : "password"} onChange={(e) => setPassword(e.target.value)} />
+                        <span className='eye-icon' onClick={(e) => setShowPassword(!showPassword)}>
+                            {showPassword ? <FaEye /> : <FaEyeSlash />}</span>
+                    </div>
                 </div>
                 <div className="loginbtn">
                     <button type='submit'>{t("updatePassword")}</button>
