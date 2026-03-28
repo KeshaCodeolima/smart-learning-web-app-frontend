@@ -11,13 +11,13 @@ function Dashboardnotes() {
     const [language, setLanguage] = useState('None');
     const [summary, setSummary] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     const handleCreatNote = async () => {
         if (!noteContent)
             return toast.info(t("noteRequired"), { position: "top-center", autoClose: 4000, theme: "colored" });
 
-        if(language ==='None')
+        if (language === 'None')
             return toast.info(t("selectLangNote"), { position: "top-center", autoClose: 4000, theme: "colored" });
 
         setIsLoading(true);
@@ -29,7 +29,7 @@ function Dashboardnotes() {
 
             const summarytext = response.data.summary;
             const bulletPoints = summarytext
-                .split(/\. |\n\n|•/)
+                .split(/\n|•|-/)
                 .map(point => point.trim())
                 .filter(point => point.length > 0);
 
@@ -77,9 +77,13 @@ function Dashboardnotes() {
                 </div>
                 {summary && (
                     <div className="summary-result" style={{ marginTop: '20px', textAlign: 'left' }} >
-                        <h3>{t("shortNoteResult")}:</h3>
-                        <div className="summary-box" style={{ background: '#f9f9f9', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }} >
-                            <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }} >{summary}</pre>
+                        <h3 style={{ color: "#144594" }}>{t("shortNoteResult")}:</h3>
+                        <div className="summary-box" style={{ background: 'white', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }} >
+                            <ul className="summary-list">
+                                {summary.map((point, index) => (
+                                    <li key={index}>{point}</li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 )}
