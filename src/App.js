@@ -17,6 +17,7 @@ import Resetpassword from "./Components/Login/resetpassword";
 import AdminLogin from "./Components/Login/Admin/adminlogin";
 import Adminpage from "./Components/Login/Admin/adminpage";
 import './i18n';
+import ConfusedTimes from "./Components/Dashboard/dashboardvideo/confusedtimes";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("keepLoggedIn")));
@@ -45,6 +46,7 @@ function App() {
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/adminpage" element={<Adminpage />} />
+          <Route path="/confused-times" element={<ConfusedTimes/>}/>
         </Routes>
       </BrowserRouter>
     </>
