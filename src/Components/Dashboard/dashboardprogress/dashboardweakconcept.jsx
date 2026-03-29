@@ -11,7 +11,7 @@ function Dashboardweakconcept() {
             <div className="topic-container">
                 {weak.length === 0 && <p>{t("noWeakTopics")}</p>}
                 {weak.map((w, i) => (
-                    <div className="topic-card" style={{ width: '40%', }} key={i}>
+                    <div className="topic-card" style={{ width: '80%', }} key={i}>
                         <h3>{w.topic}</h3>
                         <p>{t("score")}: {w.score}%</p>
                     </div>

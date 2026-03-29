@@ -95,7 +95,6 @@
 
 .language-selector:focus {
     background: #144594;
-    /* box-shadow: 0 10px 25px rgba(20, 69, 148, 0.1); */
 }
 
 .language-selector option{
@@ -144,4 +143,13 @@
 .notebtn:hover {
     background: #0d3270;
     transform: translateY(-2px);
+}
+
+.summary-list {
+    padding-left: 20px;
+}
+
+.summary-list li {
+    margin-bottom: 8px;
+    line-height: 1.5;
 }

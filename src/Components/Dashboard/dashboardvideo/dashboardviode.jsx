@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './dashboardvideo.css';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,7 +14,18 @@ function Dashboardviode() {
   const webcamRef = useRef(null);
   const mainVideoRef = useRef(null);
   const [predictionHistory, setPredictionHistory] = useState([]);
+  const [confusedMoments, setConfusedMoments] = useState([]);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.videoSrc) {
+      setVideoSrc(location.state.videoSrc);
+      setFilename(location.state.filename || '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlefile = (e) => {
     if (e.target.files.length > 0) {
@@ -24,6 +35,7 @@ function Dashboardviode() {
       const url = URL.createObjectURL(file);
       setVideoSrc(url);
       setPredictionHistory([]);
+      setConfusedMoments([]);
     }
   };
 
@@ -71,10 +83,22 @@ function Dashboardviode() {
               if (currentLabel === "Happy") {
                 mainVideoRef.current.playbackRate = 1.5;
               } else if (currentLabel === "Confused") {
-                mainVideoRef.current.currentTime = Math.max(
-                  0,
-                  mainVideoRef.current.currentTime - 15
-                );
+
+                const currentTime = mainVideoRef.current.currentTime;
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = Math.floor(currentTime % 60);
+                const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                setConfusedMoments(prev => {
+                  const last = prev[prev.length - 1];
+
+                  // avoid duplicate close times (within 5 sec)
+                  if (!last || Math.abs(currentTime - last.raw) > 5) {
+                    return [...prev, { time: formattedTime, raw: currentTime }];
+                  }
+                  return prev;
+                });
+                mainVideoRef.current.currentTime = Math.max(0, currentTime - 15);
                 mainVideoRef.current.playbackRate = 0.5;
               } else { mainVideoRef.current.playbackRate = 1.0; }
             }
@@ -86,7 +110,29 @@ function Dashboardviode() {
     };
     const interval = setInterval(runPrediction, 3000);
     return () => clearInterval(interval);
-  }, [videoSrc])
+  }, [videoSrc]);
+
+  useEffect(() => {
+    const video = mainVideoRef.current;
+    if (!video) return;
+    if (!videoSrc) return;
+    if (!location.state?.seekTo) return;
+
+    const seekTime = location.state.seekTo;
+    const handleSeek = () => {
+      video.currentTime = seekTime;
+      video.play().catch(() => { });
+    };
+    if (video.readyState >= 2) {
+      handleSeek();
+    } else {
+      video.addEventListener("loadeddata", handleSeek);
+    }
+    return () => {
+      video.removeEventListener("loadeddata", handleSeek);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoSrc]);
 
   const handelVideoEnd = () => {
     if (predictionHistory.length === 0) {
@@ -114,6 +160,19 @@ function Dashboardviode() {
     } else {
       toast.info(t("averageMsg"), { position: "top-center", autoClose: 4000, theme: "colored" });
     }
+    setTimeout(() => {
+      if (confusedMoments.length === 0) {
+        toast.info("No confusion detected");
+        return;
+      }
+      navigate('/confused-times', {
+        state: { confusedMoments, videoSrc, filename }
+      });
+    }, 1500);
+  }
+  const backtoDashboard = () => {
+    navigate('/dashboard')
+    setConfusedMoments([]);
   }
 
   return (
@@ -152,9 +211,9 @@ function Dashboardviode() {
             )}
           </div>
           <div className="videobtn">
-            <Link to={'/dashboard'}><button>{t("backDashboard")}</button></Link>
+            <button onClick={backtoDashboard}>{t("backDashboard")}</button>
+            <button className='proccesbtn' onClick={handleuploadfile}>{t("convertText")}</button>
           </div>
-          <button className='proccesbtn' onClick={handleuploadfile}>{t("convertText")}</button>
         </div>
       </div>
       <ToastContainer />

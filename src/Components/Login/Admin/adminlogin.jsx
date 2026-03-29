@@ -3,13 +3,15 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function AdminLogin() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     const validation = () => {
         const newErrors = {};
@@ -83,7 +85,11 @@ function AdminLogin() {
                         {errors.email && <p className='errors'>{errors.email}</p>}
 
                         <label>{t("password")}: </label>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <div className='password-field'>
+                            <input type={showPassword ? "text" : "password"} onChange={(e) => setPassword(e.target.value)} />
+                            <span className='eye-icon' onClick={(e) => setShowPassword(!showPassword)}>
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}</span>
+                        </div>
                         {errors.password && <p className='errors'>{errors.password}</p>}
                     </div>
 
